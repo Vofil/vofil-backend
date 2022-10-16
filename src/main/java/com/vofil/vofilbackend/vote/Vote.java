@@ -3,27 +3,47 @@ package com.vofil.vofilbackend.vote;
 public class Vote {
     private int gender;//설정 성별
     private int age;//설정 연령대[0,10,20,30,40,50,60]
-
-    private Long id;//투표 id
+    private String User_id;
+    private int id;//투표 id
     private VoteCaregory category;//투표 사진 종류(카톡프사, ...)
-    private int kind;//투표 종류(일반투표, 태그투표)
+    private int kind;//투표 종류(0일반투표, 1태그투표)
+    private int pic_cnt;
     private int ending_point;//투표 종료 개수
     //등록시간
     private VoteFeeling title;//투표 제목(키워드)
+    private int id_cnt=1;
+    private TagList setting;
 
-    //설정태그
-
-    public Vote(Long id, int gender, int age, VoteCaregory category, int kind, VoteFeeling title, int ending_point) {
-        this.id = id;
-        this.category=category;
+    public Vote(String User_id,int gender, int age, String category, int kind, String title, int ending_point,int pic_cnt,String setting) {
+        this.User_id=User_id;
+        this.id=id;
+        this.pic_cnt=pic_cnt;
+        VoteCaregory check2=VoteCaregory.valueOf(category);
+        this.category=check2;
         this.age=age;
         this.ending_point=ending_point;
         this.gender=gender;
-        this.title=title;
+        VoteFeeling check1=VoteFeeling.valueOf(title);
+        this.title=check1;
         this.kind=kind;
+        TagList check3=TagList.valueOf(setting);
+        this.setting=check3;
     }
-    public Vote(){
+    public int getId() {
 
+        return id;
+    }
+
+
+    public void setId(int Id) {
+        this.id= id;
+    }
+    public TagList getSetting() {
+        return setting;
+    }
+
+    public void setGender(TagList setting) {
+        this.setting=setting;
     }
     public int getGender() {
         return gender;
@@ -31,6 +51,13 @@ public class Vote {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+    public int getPic_cnt() {
+        return pic_cnt;
+    }
+
+    public void setPic_cnt(int pic_cnt) {
+        this.pic_cnt = pic_cnt;
     }
 
     public int getAge() {
