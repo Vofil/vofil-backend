@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### with front-end ###
+/src/main/vofil-frontend/
