@@ -64,7 +64,7 @@ public class User {
         return birth_day;
     }
 
-    public void setBirth_day(int birth_date) {
+    public void setBirth_day(int birth_day) {
         this.birth_day = birth_day;
     }
 
