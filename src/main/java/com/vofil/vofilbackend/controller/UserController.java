@@ -11,7 +11,7 @@ import java.util.Optional;
 
 // test 보이면 잘 연동
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     UserService userService;
