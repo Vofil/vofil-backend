@@ -1,5 +1,6 @@
 create table Voter
 (
+    id int AUTO_INCREMENT,
     User_id varchar(100),
     Vote_id int,
     result1 int,
@@ -7,5 +8,5 @@ create table Voter
     result3 int,
     result4 int,
 
-    primary key (User_id,Vote_id)
+    primary key (id)
 );
