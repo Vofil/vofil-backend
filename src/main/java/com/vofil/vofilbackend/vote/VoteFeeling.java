@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum VoteFeeling {
+public enum VoteFeeling {//키워드
     소개팅(1),
     대학오티(2),
     직장(3),
@@ -26,8 +26,7 @@ public enum VoteFeeling {
     인스타프사(102),
     인스타게시물(103),
     트위터프사(104),
-    트위터게시물(105),
-    트위터배사(106);
+    트위터배사(105);
 
     private final int number;
     VoteFeeling(int number){
