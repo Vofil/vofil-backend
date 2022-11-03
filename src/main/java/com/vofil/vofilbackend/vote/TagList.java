@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum TagList {
+public enum TagList {//태그 투표할 떄
     예쁘다(1),
     귀엽다(2),
     시크하다(3),
@@ -40,5 +40,6 @@ public enum TagList {
     public static TagList valueOfNumber(int number){
         return BY_NUMBER.get(number);
     }
+
 
 }
