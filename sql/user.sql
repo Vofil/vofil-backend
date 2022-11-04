@@ -6,7 +6,7 @@ create table user
     birth_year int,
     birth_month int,
     birth_day int,
-    sex int,
+    gender int,
 
     point bigint,
     keyword varchar(100),

@@ -13,7 +13,8 @@ public class User {
     int birth_year;
     int birth_month;
     int birth_day;
-    int sex;
+
+    int gender;
 
     Long point;
     String keyword;
@@ -68,12 +69,13 @@ public class User {
         this.birth_day = birth_day;
     }
 
-    public int getSex() {
-        return sex;
+
+    public int getGender() {
+        return gender;
     }
 
-    public void setSex(int sex) {
-        this.sex = sex;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public Long getPoint() {
