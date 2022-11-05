@@ -1,5 +1,6 @@
 package com.vofil.vofilbackend.repository;
 
+import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.service.VoteService;
 import com.vofil.vofilbackend.domain.Voter;
 import com.vofil.vofilbackend.service.VoterService;
@@ -18,15 +19,14 @@ public class VoterRepository {
     //private static Map<Integer, Voter> store = new HashMap<>();
 
     public Voter save(Voter voter) {
-        //VoteService voteService=new VoteService(new VoteRepository(em));
-        //VoterService voterService=new VoterService(new VoterRepository(em));
-        //int[] result2=voterService.extract(voter.getVote_id());
-        //voter.setFinal_result(result2);
-        //store.put(voter.getVote_id(), voter);
+
         em.persist(voter);
         return voter;
     }
-
+    public List<Voter> getAllVoters(){
+        return em.createQuery("select u from Voter u",Voter.class)
+                .getResultList();
+    }
     public Optional<Voter> findById(int id){
         Voter voter= em.find(Voter.class,id);
         return Optional.ofNullable(voter);
@@ -36,5 +36,10 @@ public class VoterRepository {
     public List<Voter> findResult(int id){
         return em.createQuery("select u from Voter u where u.Vote_id = :id",Voter.class).setParameter("id",id).getResultList();
     }
+    //VoteService voteService=new VoteService(new VoteRepository(em));
+    //VoterService voterService=new VoterService(new VoterRepository(em));
+    //int[] result2=voterService.extract(voter.getVote_id());
+    //voter.setFinal_result(result2);
+    //store.put(voter.getVote_id(), voter);
 
 }

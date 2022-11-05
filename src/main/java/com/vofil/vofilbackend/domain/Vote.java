@@ -4,101 +4,83 @@ import com.vofil.vofilbackend.vote.TagList;
 import com.vofil.vofilbackend.vote.VoteCaregory;
 import com.vofil.vofilbackend.vote.VoteFeeling;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Vote {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;//투표 id
-    private VoteFeeling title;//투표 제목(키워드)
-    private VoteCaregory category;//투표 사진 종류(카톡프사, ...)
-    private TagList setting;//설정한 태그
-    private String Taging;//설정태그의 string
-    private String Categorying;//설정 사진카테고리의 string
-    private String Feeling;//설정 투표제목(키워드)의 string
+    @Id //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;//투표 id
 
-    private int gender;//설정 성별
-    private int age;//설정 연령대[0,10,20,30,40,50,60]
-    private String User_id;
-    private int kind;//투표 종류(0일반투표, 1태그투표)
-    private int pic_cnt;//등록하는 사진 개수
-    private int ending_point;//투표 종료 개수
-    //등록시간
-    private int[] final_result;//최종 결과 투표값 리스트(update)자주 되야함
-
-    public int[] getFinal_result() {
-        return final_result;
-    }
-
-    public void setFinal_result(int[] final_result) {
-        this.final_result = final_result;
-    }
-
-    public String getTaging() {
-        return Taging;
-    }
-
-    public void setTaging(String taging) {
-        Taging = taging;
-    }
-
-    public String getCategorying() {
-        return Categorying;
-    }
-
-    public void setCategorying(String categorying) {
-        Categorying = categorying;
-    }
-
-    public String getFeeling() {
-        return Feeling;
-    }
-
-    public void setFeeling(String feeling) {
-        Feeling = feeling;
-    }
+    int gender;//설정 성별
+    int age;//설정 연령대[0,10,20,30,40,50,60]
+    String user_id;
 
     public String getUser_id() {
-        return User_id;
+        return user_id;
     }
 
     public void setUser_id(String user_id) {
-        User_id = user_id;
+        this.user_id = user_id;
     }
 
-    public void setSetting(TagList setting) {
-        this.setting = setting;
+    public String getTaging() {
+        return taging;
     }
+
+    public void setTaging(String taging) {
+        this.taging = taging;
+    }
+
+    public String getCategorying() {
+        return categorying;
+    }
+
+    public void setCategorying(String categorying) {
+        this.categorying = categorying;
+    }
+
+    public String getFeeling() {
+        return feeling;
+    }
+
+    public void setFeeling(String feeling) {
+        this.feeling = feeling;
+    }
+
+    int kind;//투표 종류(0일반투표, 1태그투표)
+    int pic_cnt;//등록하는 사진 개수
+    int ending_point;//투표 종료 개수
+    int result1;
+    int result2;
+    int result3;
+    int result4;
+
+//    @Enumerated(EnumType.STRING)
+//    private VoteFeeling title;//투표 제목(키워드)
+//    @Enumerated(EnumType.STRING)
+//    private VoteCaregory category;//투표 사진 종류(카톡프사, ...)
+//    @Enumerated(EnumType.STRING)
+//    private TagList setting;//설정한 태그
+
+    private String taging;//설정태그의 string
+    private String categorying;//설정 사진카테고리의 string
+    private String feeling;//설정 투표제목(키워드)의 string
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
-        this.id= id;
+        this.id = id;
     }
 
-    public TagList getSetting() {
-        return setting;
-    }
 
-    public void setTagList(TagList setting) {
-        this.setting=setting;
-    }
     public int getGender() {
         return gender;
     }
 
     public void setGender(int gender) {
         this.gender = gender;
-    }
-    public int getPic_cnt() {
-        return pic_cnt;
-    }
-
-    public void setPic_cnt(int pic_cnt) {
-        this.pic_cnt = pic_cnt;
     }
 
     public int getAge() {
@@ -109,13 +91,6 @@ public class Vote {
         this.age = age;
     }
 
-    public VoteCaregory getCategory() {
-        return category;
-    }
-
-    public void setCategory(VoteCaregory category) {
-        this.category = category;
-    }
 
     public int getKind() {
         return kind;
@@ -123,6 +98,14 @@ public class Vote {
 
     public void setKind(int kind) {
         this.kind = kind;
+    }
+
+    public int getPic_cnt() {
+        return pic_cnt;
+    }
+
+    public void setPic_cnt(int pic_cnt) {
+        this.pic_cnt = pic_cnt;
     }
 
     public int getEnding_point() {
@@ -133,12 +116,36 @@ public class Vote {
         this.ending_point = ending_point;
     }
 
-    public VoteFeeling getTitle() {
-        return title;
+    public int getResult1() {
+        return result1;
     }
 
-    public void setTitle(VoteFeeling title) {
-        this.title = title;
+    public void setResult1(int result1) {
+        this.result1 = result1;
+    }
+
+    public int getResult2() {
+        return result2;
+    }
+
+    public void setResult2(int result2) {
+        this.result2 = result2;
+    }
+
+    public int getResult3() {
+        return result3;
+    }
+
+    public void setResult3(int result3) {
+        this.result3 = result3;
+    }
+
+    public int getResult4() {
+        return result4;
+    }
+
+    public void setResult4(int result4) {
+        this.result4 = result4;
     }
 
     /*public Vote(String User_id,int gender, int age, String category, int kind, String title, int ending_point,int pic_cnt,String setting) {
