@@ -18,11 +18,11 @@ public class VoterService {
     public ResponseEntity createVoter(Voter voter){
         voterRepository.save(voter);
         //sql update문 넣기!!
-        return ResponseEntity.ok().body(voter.getFinal_result());
+        return ResponseEntity.ok().body(voter.getId());
     }
-
-
-
+    public List<Voter> getAllVoters() {
+        return voterRepository.getAllVoters();
+    }
     /*
     public String resulting(int id){//모든 결과값의 합으로 투표값 array 만들기
         Optional<Voter> cnt1=voterRepository.findById(id);

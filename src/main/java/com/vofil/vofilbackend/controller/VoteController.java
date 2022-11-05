@@ -21,14 +21,25 @@ public class VoteController {
     public ResponseEntity createVote(@RequestBody Vote vote){
         return voteService.createVote(vote);
     }
-    @GetMapping("")
-    public ResponseEntity toString(@RequestBody Vote vote){
-        return voteService.toString(vote);
-    }
+
     @GetMapping("/{id}")
     public ResponseEntity extract(@PathVariable int id){
         return voteService.extract(id);
     }
+    @GetMapping("/update")
+    public ResponseEntity updateFinal(@PathVariable int id){
+        return voteService.extract(id);
+    }
+    @GetMapping("")
+    public ResponseEntity getAllVotes(){
+        return ResponseEntity.ok().body(voteService.getAllVotes());
+    }
+
+    @GetMapping("/title")
+    public ResponseEntity toString(@RequestBody Vote vote){
+        return ResponseEntity.ok().body(voteService.toString(vote));
+    }
+
 
     /*
     @GetMapping("/votes/photos")
