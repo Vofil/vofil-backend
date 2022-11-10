@@ -17,8 +17,8 @@ public class User {
     int gender;
 
     Long point;
-    String keyword;
-    String title;
+    String keyword; // 대표 키워드
+    String title; // 칭호
 
     // getter and setters
     public String getName() {
