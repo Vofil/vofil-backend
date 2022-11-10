@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 // test 보이면 잘 연동
@@ -22,7 +23,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity logInUser(@PathVariable String id, @RequestBody User user) {
+    public ResponseEntity logInUser(@PathVariable String id, @RequestBody Map<String, String> body) {
+        User user = new User();
+        user.setId(body.get("id"));
+        user.setPassword(body.get("password"));
         return userService.logIn(id, user.getPassword());
     }
 
