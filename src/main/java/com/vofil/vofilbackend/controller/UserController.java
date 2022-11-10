@@ -22,12 +22,9 @@ public class UserController {
         return userService.signUp(user);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity logInUser(@PathVariable String id, @RequestBody Map<String, String> body) {
-        User user = new User();
-        user.setId(body.get("id"));
-        user.setPassword(body.get("password"));
-        return userService.logIn(id, user.getPassword());
+    @GetMapping("")
+    public ResponseEntity logInUser(@RequestParam String id, @RequestParam String password) {
+        return userService.logIn(id, password);
     }
 
     @GetMapping("")
