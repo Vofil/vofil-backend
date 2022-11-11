@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -29,7 +30,7 @@ public class VoteController {
 //        return voteService.extract(id);
 //    }
     @GetMapping("/update")
-    public ResponseEntity updateFinal(@PathVariable int id){
+    public ResponseEntity updateFinal(@RequestParam int id){
         return voteService.extract(id);
     }
     @GetMapping("")
