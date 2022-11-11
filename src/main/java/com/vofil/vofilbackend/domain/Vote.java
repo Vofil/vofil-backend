@@ -8,16 +8,13 @@ import javax.persistence.*;
 
 @Entity
 public class Vote {
-    @Id //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     int id;//투표 id
 
     int gender;//설정 성별
     int age;//설정 연령대[0,10,20,30,40,50,60]
     String user_id;
 
-    public String getUser_id() {
-        return user_id;
-    }
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
@@ -42,6 +39,7 @@ public class Vote {
     public String getFeeling() {
         return feeling;
     }
+
 
     public void setFeeling(String feeling) {
         this.feeling = feeling;

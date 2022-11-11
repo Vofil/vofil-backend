@@ -32,6 +32,16 @@ public class VoteRepository {
         em.createQuery("update Vote u set u.result4=:result4 where u.id=:id").setParameter(id,result4).executeUpdate();
         return vote;
     }
+//    public Vote updatePic(int id,String result1,String result2, String result3, String result4){
+//        Vote vote= em.find(Vote.class,id);
+//        //em.createQuery("delete u from Vote u where u.id= :id",Vote.class).setParameter("id",id).executeUpdate();
+//        //save(vote1);
+//        em.createQuery("update Vote u set u.re1=:result1 where u.id=:id").setParameter(id,result1).executeUpdate();
+//        em.createQuery("update Vote u set u.re2=:result2 where u.id=:id").setParameter(id,result2).executeUpdate();
+//        em.createQuery("update Vote u set u.re3=:result3 where u.id=:id").setParameter(id,result3).executeUpdate();
+//        em.createQuery("update Vote u set u.re4=:result4 where u.id=:id").setParameter(id,result4).executeUpdate();
+//        return vote;
+//    }
     public List<Vote> getAllVotes(){
         return em.createQuery("select u from Vote u",Vote.class)
                 .getResultList();

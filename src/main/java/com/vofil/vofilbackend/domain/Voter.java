@@ -13,7 +13,7 @@ import java.util.Optional;
 @Entity
 public class Voter {
 
-    @Id //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int Vote_id;
     private String User_id;

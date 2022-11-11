@@ -10,6 +10,7 @@ import com.vofil.vofilbackend.vote.VoteCaregory;
 import com.vofil.vofilbackend.vote.VoteFeeling;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.mvc.method.annotation.ServletResponseMethodArgumentResolver;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -49,7 +50,18 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
         }
         return ResponseEntity.ok().body(check);
     }
-
+//    public ResponseEntity FileStore(int id, String re1, String re2, String re3, String re4){
+////        Optional<Vote> cnt1=voteRepository.findById(id);
+////        Vote cnt= cnt1.get();
+////
+////        cnt.setRe1(re1);
+////        cnt.setRe2(re2);
+////        cnt.setRe3(re3);
+////        cnt.setRe4(re4);
+//
+//        voteRepository.updatePic(id, re1,re2,re3,re4);
+//        return ResponseEntity.ok().body(id);
+//    }
     public ResponseEntity extract(int id){//투표 id가 인자
         List<Voter> finding=voterRepository.findResult(id);
         Optional<Vote> cnt1=voteRepository.findById(id);
