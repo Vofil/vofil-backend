@@ -39,13 +39,13 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
     public ResponseEntity toString(Vote vote){
         VoteFeeling titles=VoteFeeling.valueOf(vote.getFeeling());
         String check=titles.toString();
-        if (titles.number()<10){
+        if (titles.number()<10){//상황
             check=check+"에 어울리는 사진을 골라주세요";
         }
-        else if(titles.number()<100){
+        else if(titles.number()<100){//분위기
             check=check+"느낌의 사진을 골라주세요";
         }
-        else{
+        else{//비율
             check=check+"에 적합한 사진을 골라주세요";
         }
         return ResponseEntity.ok().body(check);
@@ -83,20 +83,24 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
             for(int i=0;i<finding.size();i++){
                 int SettingNum=TagList.valueOf(cnt.getTaging()).number();
                 if(SettingNum==finding.get(i).getResult1())
-                    N_result1+=finding.get(i).getResult1();
+                    N_result1+=1;
 
                 if(SettingNum==finding.get(i).getResult2())
-                    N_result2+=finding.get(i).getResult2();
+                    N_result2+=1;
 
                 if(SettingNum==finding.get(i).getResult3())
-                    N_result3+=finding.get(i).getResult3();
+                    N_result3+=1;
 
                 if(SettingNum==finding.get(i).getResult4())
-                    N_result4+=finding.get(i).getResult4();
+                    N_result4+=1;
 
             }
 
         }
+//        System.out.println(N_result1);
+//        System.out.println(N_result2);
+//        System.out.println(N_result3);System.out.println(N_result4);
+
 //        cnt.setResult1(N_result1);
 //        cnt.setResult2(N_result2);
 //        cnt.setResult3(N_result3);
