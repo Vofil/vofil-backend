@@ -22,7 +22,7 @@ public class UserController {
         return userService.signUp(user);
     }
 
-    @GetMapping("/")
+    @GetMapping(value = "", params = {"id", "password"})
     public ResponseEntity logInUser(@RequestParam String id, @RequestParam String password) {
         return userService.logIn(id, password);
     }
