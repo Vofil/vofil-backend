@@ -12,6 +12,8 @@ create table Vote
     result2 int,
     result3 int,
     result4 int,
+
+
     taging varchar(100),
     categorying varchar(100),
     feeling varchar(100),

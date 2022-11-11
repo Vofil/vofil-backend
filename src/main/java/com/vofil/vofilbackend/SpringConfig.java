@@ -1,6 +1,8 @@
 package com.vofil.vofilbackend;
 
+import com.vofil.vofilbackend.repository.PictureRepository;
 import com.vofil.vofilbackend.repository.UserRepository;
+import com.vofil.vofilbackend.service.PictureService;
 import com.vofil.vofilbackend.service.UserService;
 import com.vofil.vofilbackend.repository.VoteRepository;
 import com.vofil.vofilbackend.service.VoteService;
@@ -30,6 +32,15 @@ public class SpringConfig {
     @Bean
     public UserRepository userRepository() {
         return new UserRepository(em);
+    }
+    @Bean
+    public PictureService pictureService() {
+        return new PictureService(new PictureRepository(em));
+    }
+
+    @Bean
+    public PictureRepository pictureRepository() {
+        return new PictureRepository(em);
     }
 
     @Bean
