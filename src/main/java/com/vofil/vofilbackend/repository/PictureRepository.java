@@ -1,6 +1,7 @@
 package com.vofil.vofilbackend.repository;
 
 import com.vofil.vofilbackend.domain.Picture;
+import com.vofil.vofilbackend.domain.User;
 import com.vofil.vofilbackend.domain.Vote;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,13 +9,17 @@ import javax.persistence.EntityManager;
 import javax.swing.plaf.basic.BasicDesktopIconUI;
 import javax.swing.plaf.multi.MultiInternalFrameUI;
 import java.util.List;
+import java.util.Optional;
 
 public class PictureRepository {
     private final EntityManager em;
     public PictureRepository(EntityManager em) {
         this.em = em;
     }
-
+    public Optional<Picture> findById(int id) {
+        Picture user = em.find(Picture.class, id);
+        return Optional.ofNullable(user);
+    }
     public Picture save(Picture picture) {//VoteCaregory check2=VoteCaregory.valueOf(category)
         em.persist(picture);
         return picture;
@@ -22,16 +27,17 @@ public class PictureRepository {
     public Picture update(int id, String file,int cnt){
         Picture picture=em.find(Picture.class, id);
         if(cnt==1){
-            em.createQuery("update Picture u set u.re1= re where u.id=:id").setParameter(id,file).executeUpdate();
+            em.createQuery("update Picture u set u.re1= re where u.id=:id").setParameter("id",id).setParameter("re",file).executeUpdate();
         }
         else if(cnt==2){
-            em.createQuery("update Picture u set u.re2= re where u.id=:id").setParameter(id,file).executeUpdate();
+            em.createQuery("update Picture u set u.re2= re where u.id=:id").setParameter("id",id).setParameter("re",file).executeUpdate();
+
         }
         else if(cnt==3){
-            em.createQuery("update Picture u set u.re3= re where u.id=:id").setParameter(id,file).executeUpdate();
+            em.createQuery("update Picture u set u.re3= re where u.id=:id").setParameter("id",id).setParameter("re",file).executeUpdate();
         }
         else if(cnt==4){
-            em.createQuery("update Picture u set u.re4= re where u.id=:id").setParameter(id,file).executeUpdate();
+            em.createQuery("update Picture u set u.re4= re where u.id=:id").setParameter("id",id).setParameter("re",file).executeUpdate();
         }
         return picture;
     }
