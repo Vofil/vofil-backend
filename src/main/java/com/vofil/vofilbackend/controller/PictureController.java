@@ -32,7 +32,7 @@ public class PictureController {
         return pictureService.createPicture(picture);
     }
     //@PutMapping(value = "", params = {"file","id", "cnt"})
-    @PostMapping("")
+    @PostMapping("/clock")
     public ResponseEntity addFile(@RequestParam("file") MultipartFile file, @RequestParam int id, @RequestParam int cnt) throws IOException{
         System.out.println("확인");
 
@@ -49,6 +49,13 @@ public class PictureController {
         MultipartFile file=multipartRequest.getFile("blob");
 
         return pictureService.update(id,file.getOriginalFilename(),cnt);
+    }
+    @GetMapping("/checked")
+    public ResponseEntity addFile(@RequestParam String file, @RequestParam int id, @RequestParam int cnt) throws IOException{
+
+        //MultipartFile file=multipartRequest.getFile("blob");
+
+        return pictureService.update(id,file,cnt);
     }
     @GetMapping("/show")
     public ResponseEntity showFile(@RequestParam int id, @RequestParam int cnt){

@@ -24,6 +24,7 @@ public class VoteRepository {
         Vote vote= em.find(Vote.class,id);
         return Optional.ofNullable(vote);
     }
+
     //고치기
     public Vote check(int id){
         Vote vote= em.find(Vote.class,id);

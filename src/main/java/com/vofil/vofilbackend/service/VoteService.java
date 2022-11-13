@@ -109,7 +109,22 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
         return ResponseEntity.ok().body(cnt.getId());
     }
 
-}
+
+    public ResponseEntity showResult(int id, int cnt) {
+        Optional<Vote> cnt1 = voteRepository.findById(id);
+        Vote check = cnt1.get();
+        int answer = 0;
+        if (cnt == 1) {
+            answer = check.getResult1();
+        } else if (cnt == 2) {
+            answer = check.getResult2();
+        } else if (cnt == 3) {
+            answer = check.getResult3();
+        } else {
+            answer = check.getResult4();
+        }
+        return ResponseEntity.ok().body(answer);
+    }
 /*public Vote save(Vote vote) {//VoteCaregory check2=VoteCaregory.valueOf(category);
         //VoteFeeling check1=VoteFeeling.valueOf(title);
         //vote.setId(++sequence);
@@ -128,3 +143,4 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
 
         return voter;
     }*/
+    }
