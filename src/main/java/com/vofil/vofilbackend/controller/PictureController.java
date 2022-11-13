@@ -32,7 +32,7 @@ public class PictureController {
         return pictureService.createPicture(picture);
     }
     //@PutMapping(value = "", params = {"file","id", "cnt"})
-    @GetMapping("")
+    @PostMapping("")
     public ResponseEntity addFile(@RequestParam("file") MultipartFile file, @RequestParam int id, @RequestParam int cnt) throws IOException{
         System.out.println("확인");
 
@@ -43,7 +43,7 @@ public class PictureController {
         return pictureService.update(id,file.getOriginalFilename(),cnt);
     }
 
-    @GetMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity addFile(@RequestParam MultipartHttpServletRequest multipartRequest, @RequestParam int id, @RequestParam int cnt) throws IOException{
 
         MultipartFile file=multipartRequest.getFile("blob");
