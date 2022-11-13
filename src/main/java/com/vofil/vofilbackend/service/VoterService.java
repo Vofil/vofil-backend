@@ -21,6 +21,7 @@ public class VoterService {
         voteRepository.check(voter.getVote_id());
         return ResponseEntity.ok().body(voter.getId());
     }
+
     public List<Voter> getAllVoters() {
         return voterRepository.getAllVoters();
     }

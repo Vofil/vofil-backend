@@ -38,9 +38,13 @@ public class VoteController {
         return ResponseEntity.ok().body(voteService.getAllVotes());
     }
 
-    @GetMapping("/title")
-    public ResponseEntity toString(@RequestBody Vote vote){
-        return ResponseEntity.ok().body(voteService.toString(vote));
+////    @GetMapping("/title")
+//    public ResponseEntity toString(@RequestBody Vote vote){
+//        return ResponseEntity.ok().body(voteService.toString(vote));
+//    }
+    @GetMapping("/result")
+    public ResponseEntity showResult(@RequestParam int id,@RequestParam int cnt){
+        return ResponseEntity.ok().body(voteService.showResult(id, cnt));
     }
 
     @PutMapping(value = "/ttt", params = "voteId")
