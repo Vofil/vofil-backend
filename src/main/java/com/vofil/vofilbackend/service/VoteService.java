@@ -10,6 +10,8 @@ import com.vofil.vofilbackend.vote.VoteCaregory;
 import com.vofil.vofilbackend.vote.VoteFeeling;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.method.annotation.ServletResponseMethodArgumentResolver;
 
 import javax.transaction.Transactional;
@@ -109,7 +111,11 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
         return ResponseEntity.ok().body(cnt.getId());
     }
 
+    public void updateUserTitleAndKeyword(int voteId) {
+        voteRepository.updateUserTitleAndKeyword(voteId);
+    }
 }
+
 /*public Vote save(Vote vote) {//VoteCaregory check2=VoteCaregory.valueOf(category);
         //VoteFeeling check1=VoteFeeling.valueOf(title);
         //vote.setId(++sequence);

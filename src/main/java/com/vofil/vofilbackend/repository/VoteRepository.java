@@ -1,12 +1,19 @@
 package com.vofil.vofilbackend.repository;
 
+import com.vofil.vofilbackend.domain.User;
 import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.domain.Voter;
 import com.vofil.vofilbackend.vote.VoteFeeling;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -96,13 +103,18 @@ public class VoteRepository {
     }*/
 
 
+    @Autowired
+    VoterRepository voterRepository;
 
     // vote 하나가 끝나면, 그에 해당하는 voter들의 칭호를 업데이트한다.
-    public void updateUserTitle(List<Voter> voters) {
+    public void updateUserTitleAndKeyword(int voteId) {
+
+        List<Voter> voters = voterRepository.findResult(voteId);
         // 그에 해당하는 voter들의 모든 칭호를 업데이트 (해당되는 애들만)
         for (int i = 0 ; i<voters.size() ; i++) {
             Voter nowVoter = voters.get(i);
-            List<Voter> nowVoterResult = em.createQuery("select u from Voter u where u.Voter_id = :id",Voter.class).setParameter("id",nowVoter.getId()).getResultList();
+            List<Voter> nowVoterResult = em.createQuery("select u from Voter u where u.User_id = :id",Voter.class).setParameter("id",nowVoter.getUser_id()).getResultList();
+
 
             // 매 X번 마다, 칭호를 업데이트한다.
             int XXX = 1;
@@ -116,6 +128,7 @@ public class VoteRepository {
                 int moodCnt = 0;
                 int kindCnt = 0;
 
+                String lastKeyword = "";
                 // 각각의 vote에 대해, 1.대중/독창 계산 , 2.상황/분위기/종류 계산
                 for (int j = 0 ; j<nowVoterResult.size() ; j++) {
                     Vote nowVoterVote = findById(nowVoterResult.get(j).getVote_id()).get(); // vote 추출
@@ -135,25 +148,24 @@ public class VoteRepository {
                     }
                     ArrayList<Integer> maxList = new ArrayList<>();
                     for (int k = 0; k<4; k++) {
-                        if (maxResult == resultArray[k]) maxList.add(k);
+                        if (maxResult == resultArray[k]) maxList.add(k+1);
                     }
-
                     // 내가 투표한 것의 숫자
                     int myResult = -1;
                     if (nowVoterResult.get(j).getResult1() == 1) myResult = 1;
                     else if (nowVoterResult.get(j).getResult2() == 1) myResult = 2;
                     else if (nowVoterResult.get(j).getResult3() == 1) myResult = 3;
                     else myResult = 4;
-
                     boolean notInFlag = true;
                     for (int k = 0; k<maxList.size(); k++) {
-                        if (maxList.get(i) == myResult){
+                        if (maxList.get(k) == myResult){
                             notInFlag = false;
                             isMatched += 1;
                             break;
                         }
                     }
                     if (notInFlag) isNotMatched += 1;
+
 
                     // 2. 상황/분위기/종류 계산
                     VoteFeeling titles = VoteFeeling.valueOf(nowVoterVote.getFeeling());
@@ -166,6 +178,9 @@ public class VoteRepository {
                     else{
                         kindCnt += 1;
                     }
+
+                    if (j == nowVoterResult.size()-1)
+                        lastKeyword = nowVoterVote.getFeeling();
                 }
 
                 // 변수들 값들 비교해서 칭호 최종 판별
@@ -182,8 +197,19 @@ public class VoteRepository {
                 else if (isMatched == maxVal) title = "대중적인 눈";
                 else if (isNotMatched == maxVal) title = "독창적인 눈";
 
+                User v = (User) em.createQuery("select u from User u where u.id=:id").setParameter("id", nowVoter.getUser_id()).getSingleResult();
+
                 // 그 유저의 칭호 UPDATE 쿼리
-                // todo update 쿼리
+                em.createQuery("update User u set u.title=:title where u.id=:id")
+                        .setParameter("id",nowVoter.getUser_id())
+                        .setParameter("title",title)
+                        .executeUpdate();
+
+                // 그 유저의 keyword update 쿼리 - 일단은 임시적으로, 제일 최근 키워드
+                em.createQuery("update User u set u.keyword=:keyword where u.id=:id")
+                        .setParameter("id",nowVoter.getUser_id())
+                        .setParameter("keyword",lastKeyword)
+                        .executeUpdate();
             }
         }
     }
