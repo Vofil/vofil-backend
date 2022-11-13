@@ -152,4 +152,3 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
 
         return voter;
     }*/
-    }
