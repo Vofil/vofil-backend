@@ -20,10 +20,13 @@ public class PictureService {
 
     public ResponseEntity createPicture(Picture picture){
         pictureRepository.save(picture);
-        //sql update문 넣기!!
+
         return ResponseEntity.ok().body(picture.getId());
     }
     public ResponseEntity update(int id, String file, int cnt){
+//        if(pictureRepository.findById(id).isEmpty()){
+//            pictureRepository.save(picture);
+//        }
         pictureRepository.update(id, file, cnt);
         return ResponseEntity.ok().body(id);
     }

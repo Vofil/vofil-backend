@@ -23,8 +23,10 @@ public class PictureController {
     public ResponseEntity createPicture(@RequestBody Picture picture){//id만 채우고 나머지는 null로 일단 받아서 객체 만들기
         return pictureService.createPicture(picture);
     }
+
     @GetMapping("")
     public ResponseEntity addFile(@RequestParam MultipartFile file, @RequestParam int id, @RequestParam int cnt) throws IOException{
+
         if(!file.isEmpty()){
             String fullPath="/Users/82106/file/"+file.getOriginalFilename();
             file.transferTo(new File(fullPath));
