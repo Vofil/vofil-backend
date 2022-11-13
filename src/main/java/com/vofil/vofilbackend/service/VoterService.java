@@ -12,12 +12,13 @@ import java.util.Optional;
 @Transactional
 public class VoterService {
     VoterRepository voterRepository;
+    VoteRepository voteRepository;
     public VoterService(VoterRepository voterRepository) {
         this.voterRepository=voterRepository;
     }
     public ResponseEntity createVoter(Voter voter){
         voterRepository.save(voter);
-        //sql update문 넣기!!
+        voteRepository.check(voter.getVote_id());
         return ResponseEntity.ok().body(voter.getId());
     }
     public List<Voter> getAllVoters() {

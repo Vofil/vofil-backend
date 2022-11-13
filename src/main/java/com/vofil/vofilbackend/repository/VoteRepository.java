@@ -25,6 +25,15 @@ public class VoteRepository {
         return Optional.ofNullable(vote);
     }
     //고치기
+    public Vote check(int id){
+        Vote vote= em.find(Vote.class,id);
+        em.createQuery("update Vote u set u.ending_point=u.ending_point-1 where u.id=:id").setParameter("id",id).executeUpdate();
+        Vote vote1= em.find(Vote.class,id);
+        if(vote1.getEnding_point()==0){
+            //여기 키워드 관련 함수?
+        }
+        return vote;
+    }
 
     public Vote updateFinal(int id,int result1,int result2, int result3, int result4){
         Optional<Vote> cnt1=findById(id);

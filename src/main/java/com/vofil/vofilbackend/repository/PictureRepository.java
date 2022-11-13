@@ -27,17 +27,17 @@ public class PictureRepository {
     public Picture update(int id, String file,int cnt){
         Picture picture=em.find(Picture.class, id);
         if(cnt==1){
-            em.createQuery("update Picture u set u.re1= re where u.id=:id").setParameter("id",id).setParameter("re",file).executeUpdate();
+            em.createQuery("update Picture u set u.re1=:re1 where u.id=:id").setParameter("re1",file).setParameter("id",id).executeUpdate();
         }
         else if(cnt==2){
-            em.createQuery("update Picture u set u.re2= re where u.id=:id").setParameter("id",id).setParameter("re",file).executeUpdate();
+            em.createQuery("update Picture u set u.re2=:re2 where u.id=:id").setParameter("re2",file).setParameter("id",id).executeUpdate();
 
         }
         else if(cnt==3){
-            em.createQuery("update Picture u set u.re3= re where u.id=:id").setParameter("id",id).setParameter("re",file).executeUpdate();
+            em.createQuery("update Picture u set u.re3=:re3 where u.id=:id").setParameter("re3",file).setParameter("id",id).executeUpdate();
         }
         else if(cnt==4){
-            em.createQuery("update Picture u set u.re4= re where u.id=:id").setParameter("id",id).setParameter("re",file).executeUpdate();
+            em.createQuery("update Picture u set u.re4=:re4 where u.id=:id").setParameter("re4",file).setParameter("id",id).executeUpdate();
         }
         return picture;
     }
