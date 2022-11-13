@@ -2,16 +2,24 @@ package com.vofil.vofilbackend.controller;
 
 import com.vofil.vofilbackend.domain.Picture;
 import com.vofil.vofilbackend.service.PictureService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.rowset.serial.SerialException;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/pictures")
@@ -23,14 +31,23 @@ public class PictureController {
     public ResponseEntity createPicture(@RequestBody Picture picture){//id만 채우고 나머지는 null로 일단 받아서 객체 만들기
         return pictureService.createPicture(picture);
     }
-
+    //@PutMapping(value = "", params = {"file","id", "cnt"})
     @GetMapping("")
-    public ResponseEntity addFile(@RequestParam MultipartFile file, @RequestParam int id, @RequestParam int cnt) throws IOException{
+    public ResponseEntity addFile(@RequestParam("file") MultipartFile file, @RequestParam int id, @RequestParam int cnt) throws IOException{
+        System.out.println("확인");
 
         if(!file.isEmpty()){
             String fullPath="/Users/82106/file/"+file.getOriginalFilename();
             file.transferTo(new File(fullPath));
         }
+        return pictureService.update(id,file.getOriginalFilename(),cnt);
+    }
+
+    @GetMapping("/add")
+    public ResponseEntity addFile(@RequestParam MultipartHttpServletRequest multipartRequest, @RequestParam int id, @RequestParam int cnt) throws IOException{
+
+        MultipartFile file=multipartRequest.getFile("blob");
+
         return pictureService.update(id,file.getOriginalFilename(),cnt);
     }
     @GetMapping("/show")

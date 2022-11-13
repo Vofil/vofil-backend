@@ -19,8 +19,8 @@ public class VoterRepository {
     //private static Map<Integer, Voter> store = new HashMap<>();
 
     public Voter save(Voter voter) {
-
         em.persist(voter);
+
         return voter;
     }
     public List<Voter> getAllVoters(){
