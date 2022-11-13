@@ -43,6 +43,11 @@ public class VoteController {
         return ResponseEntity.ok().body(voteService.toString(vote));
     }
 
+    @PutMapping(value = "/ttt", params = "voteId")
+    public void updateUserTitleAndKeyword(@RequestParam int voteId) {
+        voteService.updateUserTitleAndKeyword(voteId);
+    }
+
 
 
 //    @GetMapping("/photos")
