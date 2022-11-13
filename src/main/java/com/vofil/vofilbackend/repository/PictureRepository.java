@@ -51,21 +51,17 @@ public class PictureRepository {
         String s="0"; String checked="0";
         if(cnt==1){
             s=picture.getRe1();
-            checked=s.split(" ")[1];
         }
         else if(cnt==2){
             s=picture.getRe2();
-            checked=s.split(" ")[1];
         }
         else if(cnt==3){
             s= picture.getRe3();
-            checked=s.split(" ")[1];
         }
         else if(cnt==4){
             s= picture.getRe4();
-            checked=s.split(" ")[1];
         }
-        return checked;
+        return s;
     }
 //    public Picture updatePic(int id, String result1, String result2, String result3, String result4){
 //        Vote vote= em.find(Vote.class,id);
