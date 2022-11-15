@@ -37,7 +37,10 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
         voteRepository.save(vote);
         return ResponseEntity.ok().body(vote.getId());//투표 id
     }
-
+    public ResponseEntity shrinking(int id){
+        voteRepository.check(id);
+        return ResponseEntity.ok().body(id);
+    }
     public ResponseEntity toString(Vote vote){
         VoteFeeling titles=VoteFeeling.valueOf(vote.getFeeling());
         String check=titles.toString();
