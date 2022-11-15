@@ -63,6 +63,10 @@ public class PictureRepository {
         }
         return s;
     }
+    public Picture getPicture(int id){
+        Picture user = em.find(Picture.class, id);
+        return user;
+    }
     public List<Picture> getAllPicture(){
         return em.createQuery("select u from Picture u",Picture.class)
                 .getResultList();

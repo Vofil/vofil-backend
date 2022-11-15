@@ -28,6 +28,9 @@ public class PictureService {
     public List<Picture> getAllPicture() {
         return pictureRepository.getAllPicture();
     }
+    public Picture getPicture(int id) {
+        return pictureRepository.getPicture(id);
+    }
     public ResponseEntity update(int id, String file, int cnt){
 //        if(pictureRepository.findById(id).isEmpty()){
 //            pictureRepository.save(picture);

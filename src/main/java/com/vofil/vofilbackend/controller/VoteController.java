@@ -57,7 +57,10 @@ public class VoteController {
         voteService.updateUserTitleAndKeyword(voteId);
     }
 
-
+    @GetMapping("/confirm")
+    public ResponseEntity getVotes(@RequestParam int id){
+        return ResponseEntity.ok().body(voteService.getVote(id));
+    }
 
 //    @GetMapping("/photos")
 //    public String test(){
