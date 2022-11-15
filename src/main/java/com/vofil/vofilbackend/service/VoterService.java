@@ -18,7 +18,7 @@ public class VoterService {
     }
     public ResponseEntity createVoter(Voter voter){
         voterRepository.save(voter);
-        voteRepository.check(voter.getVote_id());
+        //voteRepository.check(voter.getVote_id());
         return ResponseEntity.ok().body(voter.getId());
     }
 

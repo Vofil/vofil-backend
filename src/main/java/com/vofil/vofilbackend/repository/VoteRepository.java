@@ -37,13 +37,13 @@ public class VoteRepository {
 
     //고치기
     public Vote check(int id){
-        Vote vote= em.find(Vote.class,id);
         em.createQuery("update Vote u set u.ending_point=u.ending_point-1 where u.id=:id").setParameter("id",id).executeUpdate();
-        Vote vote1= em.find(Vote.class,id);
+        Optional<Vote> cnt1=findById(id);
+        Vote vote1= cnt1.get();
         if(vote1.getEnding_point()==0){
             //여기 키워드 관련 함수?
         }
-        return vote;
+        return vote1;
     }
 
     public Vote updateFinal(int id,int result1,int result2, int result3, int result4){

@@ -33,6 +33,10 @@ public class VoteController {
     public ResponseEntity updateFinal(@RequestParam int id){
         return voteService.extract(id);
     }
+    @GetMapping("/shrink")
+    public ResponseEntity ShrinkCnt(@RequestParam int id){
+        return voteService.shrinking(id);
+    }
     @GetMapping("")
     public ResponseEntity getAllVotes(){
         return ResponseEntity.ok().body(voteService.getAllVotes());
@@ -44,7 +48,8 @@ public class VoteController {
 //    }
     @GetMapping("/result")
     public ResponseEntity showResult(@RequestParam int id,@RequestParam int cnt){
-        return ResponseEntity.ok().body(voteService.showResult(id, cnt));
+        //updateFinal(id);
+        return voteService.showResult(id, cnt);
     }
 
     @PutMapping(value = "/ttt", params = "voteId")
