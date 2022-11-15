@@ -63,6 +63,10 @@ public class PictureRepository {
         }
         return s;
     }
+    public List<Picture> getAllPicture(){
+        return em.createQuery("select u from Picture u",Picture.class)
+                .getResultList();
+    }
 //    public Picture updatePic(int id, String result1, String result2, String result3, String result4){
 //        Vote vote= em.find(Vote.class,id);
 //        //em.createQuery("delete u from Vote u where u.id= :id",Vote.class).setParameter("id",id).executeUpdate();
