@@ -1,13 +1,7 @@
 package com.vofil.vofilbackend;
 
-import com.vofil.vofilbackend.repository.PictureRepository;
-import com.vofil.vofilbackend.repository.UserRepository;
-import com.vofil.vofilbackend.service.PictureService;
-import com.vofil.vofilbackend.service.UserService;
-import com.vofil.vofilbackend.repository.VoteRepository;
-import com.vofil.vofilbackend.service.VoteService;
-import com.vofil.vofilbackend.repository.VoterRepository;
-import com.vofil.vofilbackend.service.VoterService;
+import com.vofil.vofilbackend.repository.*;
+import com.vofil.vofilbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -76,5 +70,15 @@ public class SpringConfig {
         return new VoterRepository(em);
     }
 
+    // mainpage
+    @Bean
+    public MainpageService mainpageService() {
+        return new MainpageService(mainpageRepository());
+    }
+
+    @Bean
+    public MainpageRepository mainpageRepository() {
+        return new MainpageRepository(em);
+    }
 
 }
