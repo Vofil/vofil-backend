@@ -19,8 +19,14 @@ public class MainpageController {
     MainpageService mainpageService;
 
     // 최신 투표 리턴
-    @GetMapping(value = "", params = "user_id")
+    @GetMapping(value = "latest", params = "user_id")
     public List<SimpleVoteInformation> getLatestVotes(String user_id){
         return mainpageService.getLatestVotes(user_id);
+    }
+
+    // 맞춤 투표 리턴
+    @GetMapping(value = "custom", params = "user_id")
+    public List<SimpleVoteInformation> getCustomVotes(String user_id){
+        return mainpageService.getCustomVotes(user_id);
     }
 }
