@@ -53,9 +53,6 @@ public class MainpageRepository {
         int size = votes.size();
         List<SimpleVoteInformation> sviList = new ArrayList<>();
 
-        for (int k = 0 ; k < votes.size(); k++)
-            System.out.println(votes.get(k).getId());
-
         for (int i = 0 ; i < size ; i++) {
             SimpleVoteInformation svi = new SimpleVoteInformation();
             Vote vote = votes.get(i);

@@ -75,10 +75,18 @@ public class SpringConfig {
     public MainpageService mainpageService() {
         return new MainpageService(mainpageRepository());
     }
-
     @Bean
     public MainpageRepository mainpageRepository() {
         return new MainpageRepository(em);
     }
 
+    // mypage
+    @Bean
+    public MypageService mypageService() {
+        return new MypageService(mypageRepository());
+    }
+    @Bean
+    public MypageRepository mypageRepository() {
+        return new MypageRepository(em);
+    }
 }
