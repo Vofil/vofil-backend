@@ -22,9 +22,8 @@ public class MainpageRepository {
     public MainpageRepository(EntityManager em) {
         this.em = em;
     }
-    public final int MAIN_SHOW_NUMBER = 5; // mainpage, mypage 에서 한번에 보여주는 사진의 개수
 
-    // 최신 투표들 추출 - 끝나지 않은 투표들 추출 후 sort 역순 (Repositoy 에서는 투표들 자체만 추출)
+    // (본인에 적합한) 최신 투표들 추출 - 끝나지 않은 투표들 추출 후 sort 역순 (Repositoy 에서는 투표들 자체만 추출)
     public List<Vote> getLatestVotes(String user_id) { // user_id: 유저 아이디 (그 사람이 만든 투표는 제외하기 위함)
         User user = userRepository.findById(user_id).get();
         // 올해 년도
@@ -35,7 +34,7 @@ public class MainpageRepository {
         int userGender = user.getGender();
         int ageEnum = (int)((nowYear - userYear + 1) / 10);
 
-        List<Vote> allList = em.createQuery("select v from Vote v " +
+        return em.createQuery("select v from Vote v " +
                 "where ending_point > 0 and " +
                 "v.user_id <> :user_id and " +
                 "age=:ageEnum and " +
@@ -44,19 +43,12 @@ public class MainpageRepository {
                 .setParameter("ageEnum",ageEnum)
                 .setParameter("genderList", Arrays.asList(userGender, 5))
                 .getResultList();
-
-        List<Vote> lastList = new ArrayList<>();
-        for (int i = 1; i<MAIN_SHOW_NUMBER+1; i++){
-            if (allList.size()-i <0) break;
-            lastList.add(allList.get(allList.size()-i));
-        }
-        return lastList;
     }
 
     @Autowired
     PictureRepository pictureRepository;
 
-    // 중요 함수 - List<Vote> 받으면 -> List<SVI> 로 리턴해주는 함수!
+    // List<Vote> 받으면 -> List<SVI> 로 리턴해주는 함수!
     public List<SimpleVoteInformation> getSimpleVoteInformationList(List<Vote> votes) {
         int size = votes.size();
         List<SimpleVoteInformation> sviList = new ArrayList<>();
