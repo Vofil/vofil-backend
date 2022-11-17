@@ -106,14 +106,6 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
             }
 
         }
-//        System.out.println(N_result1);
-//        System.out.println(N_result2);
-//        System.out.println(N_result3);System.out.println(N_result4);
-
-//        cnt.setResult1(N_result1);
-//        cnt.setResult2(N_result2);
-//        cnt.setResult3(N_result3);
-//        cnt.setResult4(N_result4);
         voteRepository.updateFinal(id, N_result1,N_result2,N_result3,N_result4);
         return ResponseEntity.ok().body(cnt.getId());
     }

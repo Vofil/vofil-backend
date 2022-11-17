@@ -4,6 +4,7 @@ import com.vofil.vofilbackend.repository.VoteRepository;
 import com.vofil.vofilbackend.repository.VoterRepository;
 import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.domain.Voter;
+import com.vofil.vofilbackend.vote.TagList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -27,10 +28,48 @@ public class VoterService {
         }
 
         voterRepository.save(voter);
+        extract(voter.getVote_id());
         voteRepository.check(voter.getVote_id());
         return ResponseEntity.ok().body(voter.getId());
     }
+    public ResponseEntity extract(int id){//투표 id가 인자
+        List<Voter> finding=voterRepository.findResult(id);
+        Optional<Vote> cnt1=voteRepository.findById(id);
+        Vote cnt= cnt1.get();
+        int N_result1=0;
+        int N_result2=0;
+        int N_result3=0;
+        int N_result4=0;
 
+        if(cnt.getKind()==0){//일반
+            for(int i=0;i<finding.size();i++){
+                N_result1+=finding.get(i).getResult1();
+                N_result2+=finding.get(i).getResult2();
+                N_result3+=finding.get(i).getResult3();
+                N_result4+=finding.get(i).getResult4();
+            }
+        }
+        else{//태그
+            for(int i=0;i<finding.size();i++){
+                int SettingNum= TagList.valueOf(cnt.getTaging()).number();
+                if(SettingNum==finding.get(i).getResult1())
+                    N_result1+=1;
+
+                if(SettingNum==finding.get(i).getResult2())
+                    N_result2+=1;
+
+                if(SettingNum==finding.get(i).getResult3())
+                    N_result3+=1;
+
+                if(SettingNum==finding.get(i).getResult4())
+                    N_result4+=1;
+
+            }
+
+        }
+        voteRepository.updateFinal(id, N_result1,N_result2,N_result3,N_result4);
+        return ResponseEntity.ok().body(cnt.getId());
+    }
     public List<Voter> getAllVoters() {
         return voterRepository.getAllVoters();
     }
