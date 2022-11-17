@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,7 @@ public class VoteRepository {
         Optional<Vote> cnt1=findById(id);
         Vote vote1= cnt1.get();
         if(vote1.getEnding_point()==0){
-            //여기 키워드 관련 함수?
+            //여기 키워드 관련 함수
             updateUserTitleAndKeyword(id);
         }
         return vote1;
