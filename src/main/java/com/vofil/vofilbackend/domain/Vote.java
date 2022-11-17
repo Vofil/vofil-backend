@@ -142,6 +142,10 @@ public class Vote {
         return result4;
     }
 
+    public String getUser_id() {
+        return user_id;
+    }
+
     public void setResult4(int result4) {
         this.result4 = result4;
     }
