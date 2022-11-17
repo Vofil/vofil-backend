@@ -35,7 +35,10 @@ public class VoteRepository {
         Vote vote= em.find(Vote.class,id);
         return Optional.ofNullable(vote);
     }
-
+//    public Option<Vote> getAllVotes(){
+//        return em.createQuery("select u from Vote u",Vote.class)
+//                .getResultList();
+//    }
     //고치기
     public Vote check(int id){
         em.createQuery("update Vote u set u.ending_point=u.ending_point-1 where u.id=:id").setParameter("id",id).executeUpdate();

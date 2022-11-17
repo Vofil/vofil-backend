@@ -4,6 +4,7 @@ import com.vofil.vofilbackend.repository.VoteRepository;
 import com.vofil.vofilbackend.repository.VoterRepository;
 import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.domain.Voter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.transaction.Transactional;
@@ -13,12 +14,20 @@ import java.util.Optional;
 public class VoterService {
     VoterRepository voterRepository;
     VoteRepository voteRepository;
-    public VoterService(VoterRepository voterRepository) {
+    public VoterService(VoterRepository voterRepository,VoteRepository voteRepository) {
         this.voterRepository=voterRepository;
+        this.voteRepository=voteRepository;
     }
     public ResponseEntity createVoter(Voter voter){
+        String id=voter.getUser_id();//투표를 하는 사람 아이디
+        String createId=voteRepository.getVote(voter.getVote_id()).getUser_id();//투표를 만든 사람 아이디
+        boolean checking=voterRepository.findByVoterId(voter.getUser_id(),voter.getVote_id());//투표를 이미했는 지 여부
+        if(id.equals(createId)||checking==false){ //if로 있는 지 확인
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("해당 사용자는 투표를 할 수 없습니다");
+        }
+
         voterRepository.save(voter);
-        //voteRepository.check(voter.getVote_id());
+        voteRepository.check(voter.getVote_id());
         return ResponseEntity.ok().body(voter.getId());
     }
 
