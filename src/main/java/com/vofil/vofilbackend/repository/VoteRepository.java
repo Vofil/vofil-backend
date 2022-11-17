@@ -42,6 +42,7 @@ public class VoteRepository {
         Vote vote1= cnt1.get();
         if(vote1.getEnding_point()==0){
             //여기 키워드 관련 함수?
+            updateUserTitleAndKeyword(id);
         }
         return vote1;
     }
