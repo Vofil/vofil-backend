@@ -61,6 +61,14 @@ public class PictureController {
     public ResponseEntity showFile(@RequestParam int id, @RequestParam int cnt){
         return pictureService.showFile(id, cnt);
     }
+    @GetMapping("/confirm")
+    public ResponseEntity getPictures(@RequestParam int id){
+        return ResponseEntity.ok().body(pictureService.getPicture(id));
+    }
+    @GetMapping("")
+    public ResponseEntity getAllPictures(){
+        return ResponseEntity.ok().body(pictureService.getAllPicture());
+    }
     @PostMapping("/photo")
     public ResponseEntity uploadPic(@RequestParam MultipartFile upload, @RequestParam HttpServletRequest request,@RequestParam int id,@RequestParam int cnt){
         String saveDir=request.getSession().getServletContext().getRealPath("/resources/upload/file");

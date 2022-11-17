@@ -1,6 +1,7 @@
 package com.vofil.vofilbackend.service;
 
 import com.vofil.vofilbackend.domain.Picture;
+import com.vofil.vofilbackend.domain.User;
 import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.domain.Voter;
 import com.vofil.vofilbackend.repository.PictureRepository;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 public class PictureService {
@@ -22,6 +24,12 @@ public class PictureService {
         pictureRepository.save(picture);
 
         return ResponseEntity.ok().body(picture.getId());
+    }
+    public List<Picture> getAllPicture() {
+        return pictureRepository.getAllPicture();
+    }
+    public Picture getPicture(int id) {
+        return pictureRepository.getPicture(id);
     }
     public ResponseEntity update(int id, String file, int cnt){
 //        if(pictureRepository.findById(id).isEmpty()){

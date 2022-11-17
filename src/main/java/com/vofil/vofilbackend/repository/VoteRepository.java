@@ -1,5 +1,6 @@
 package com.vofil.vofilbackend.repository;
 
+import com.vofil.vofilbackend.domain.Picture;
 import com.vofil.vofilbackend.domain.User;
 import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.domain.Voter;
@@ -57,7 +58,10 @@ public class VoteRepository {
         em.createQuery("update Vote u set u.result4=:result4 where u.id=:id").setParameter("id",id).setParameter("result4",result4).executeUpdate();
         return vote;
     }
-
+    public Vote getVote(int id){
+        Vote user = em.find(Vote.class, id);
+        return user;
+    }
     public List<Vote> getAllVotes(){
         return em.createQuery("select u from Vote u",Vote.class)
                 .getResultList();

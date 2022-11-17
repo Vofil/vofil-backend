@@ -1,5 +1,6 @@
 package com.vofil.vofilbackend.service;
 
+import com.vofil.vofilbackend.domain.Picture;
 import com.vofil.vofilbackend.domain.User;
 import com.vofil.vofilbackend.domain.Voter;
 import com.vofil.vofilbackend.repository.VoteRepository;
@@ -40,6 +41,9 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
     public ResponseEntity shrinking(int id){
         voteRepository.check(id);
         return ResponseEntity.ok().body(id);
+    }
+    public Vote getVote(int id) {
+        return voteRepository.getVote(id);
     }
     public ResponseEntity toString(Vote vote){
         VoteFeeling titles=VoteFeeling.valueOf(vote.getFeeling());
