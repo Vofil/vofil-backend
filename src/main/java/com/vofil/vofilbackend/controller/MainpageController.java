@@ -18,15 +18,21 @@ public class MainpageController {
     @Autowired
     MainpageService mainpageService;
 
-    // 최신 투표 리턴
+    // 최신 투표 적합 리턴
     @GetMapping(value = "latest", params = "user_id")
     public List<SimpleVoteInformation> getLatestVotes(String user_id){
         return mainpageService.getLatestVotes(user_id);
     }
 
-    // 맞춤 투표 리턴
+    // 맞춤 투표 적합 리턴
     @GetMapping(value = "custom", params = "user_id")
     public List<SimpleVoteInformation> getCustomVotes(String user_id){
         return mainpageService.getCustomVotes(user_id);
+    }
+
+    // 최신 투표 전체 리턴
+    @GetMapping(value = "latest")
+    public List<SimpleVoteInformation> getLatestVotes(){
+        return mainpageService.getLatestVotes();
     }
 }

@@ -29,7 +29,7 @@ public class MainpageService {
     }
     public final int MAIN_SHOW_NUMBER = 5; // mainpage, mypage 에서 한번에 보여주는 사진의 개수
 
-    // 최신 투표 리턴
+    // (유저 해당) 최신 투표 리턴
     public List<SimpleVoteInformation> getLatestVotes(String user_id){
         List<Vote> allList = mainpageRepository.getLatestVotes(user_id);
 
@@ -41,7 +41,18 @@ public class MainpageService {
         return mainpageRepository.getSimpleVoteInformationList(lastList);
     }
 
-    // 맞춤 투표 리턴 - 대표키워드 우선, 그뒤에는 shuffle
+    // 그냥 전체 최신 투표 리턴
+    public List<SimpleVoteInformation> getLatestVotes(){
+        List<Vote> allList = mainpageRepository.getLatestVotes();
+        List<Vote> lastList = new ArrayList<>();
+        for (int i = 1; i<MAIN_SHOW_NUMBER+1; i++){
+            if (allList.size()-i <0) break;
+            lastList.add(allList.get(allList.size()-i));
+        }
+        return mainpageRepository.getSimpleVoteInformationList(lastList);
+    }
+
+    // (유저 해당) 맞춤 투표 리턴 - 대표키워드 우선, 그뒤에는 shuffle
     public List<SimpleVoteInformation> getCustomVotes(String user_id){
         List<Vote> votes = mainpageRepository.getLatestVotes(user_id);
         List<Vote> customVotes = new ArrayList<>();

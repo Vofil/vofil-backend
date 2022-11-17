@@ -45,6 +45,13 @@ public class MainpageRepository {
                 .getResultList();
     }
 
+    // (본인 상관없이) 최신 투표들 추출 - 끝나지 않은 투표들 추출 후 sort 역순 (Repositoy 에서는 투표들 자체만 추출)
+    public List<Vote> getLatestVotes() {
+        return em.createQuery("select v from Vote v " +
+                        "where ending_point > 0 ",Vote.class)
+                .getResultList();
+    }
+
     @Autowired
     PictureRepository pictureRepository;
 
