@@ -15,9 +15,19 @@ import java.util.Optional;
 public class VoterService {
     VoterRepository voterRepository;
     VoteRepository voteRepository;
-    public VoterService(VoterRepository voterRepository,VoteRepository voteRepository) {
-        this.voterRepository=voterRepository;
-        this.voteRepository=voteRepository;
+
+    public VoterService(VoterRepository voterRepository, VoteRepository voteRepository) {
+        this.voterRepository = voterRepository;
+        this.voteRepository = voteRepository;
+    }
+    public ResponseEntity confirmBool(String id,int Vid){//id 투표를 하는 사람 아이디, Vid 해당 투표 id
+        //String id=voter.getUser_id();//투표를 하는 사람 아이디
+        String createId=voteRepository.getVote(Vid).getUser_id();//투표를 만든 사람 아이디
+        boolean checking=voterRepository.findByVoterId(id,Vid);//투표를 이미했는 지 여부
+        if(id.equals(createId)||checking==false){ //if로 있는 지 확인
+            return ResponseEntity.ok().body(false);//투표결과 페이지로
+        }
+        return ResponseEntity.ok().body(true);
     }
     public ResponseEntity createVoter(Voter voter){
         String id=voter.getUser_id();//투표를 하는 사람 아이디

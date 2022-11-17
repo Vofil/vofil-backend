@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class VoterController {
     @Autowired
     VoterService voterService;
-
+    @GetMapping("/bool")
+    public ResponseEntity confirmBool(@RequestParam String id, int Vid){
+        return voterService.confirmBool(id, Vid);
+    }
     @PostMapping("")
     public ResponseEntity createVoter(@RequestBody Voter voter){
         return voterService.createVoter(voter);
