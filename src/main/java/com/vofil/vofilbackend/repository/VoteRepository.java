@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,14 +44,20 @@ public class VoteRepository {
     //고치기
     public Vote check(int id){
         em.createQuery("update Vote u set u.ending_point=u.ending_point-1 where u.id=:id").setParameter("id",id).executeUpdate();
+        em.clear();
+
         Optional<Vote> cnt1=findById(id);
         Vote vote1= cnt1.get();
         if(vote1.getEnding_point()==0){
-            //여기 키워드 관련 함수
             updateUserTitleAndKeyword(id);
         }
+
         return vote1;
     }
+//
+//    @Modifying
+//    @Query("update Vote u set u.ending_point=u.ending_point-1 where u.id=:id")
+//    void checkUpdateQuery(@Param("id") int id) {};
 
     public Vote updateFinal(int id,int result1,int result2, int result3, int result4){
         Optional<Vote> cnt1=findById(id);
@@ -89,10 +96,19 @@ public class VoteRepository {
     public void updateUserTitleAndKeyword(int voteId) {
 
         List<Voter> voters = voterRepository.findResult(voteId);
+        for (int tt = 0; tt<voters.size(); tt++)
+            System.out.println(voters.get(tt));
+
         // 그에 해당하는 voter들의 모든 칭호를 업데이트 (해당되는 애들만)
         for (int i = 0 ; i<voters.size() ; i++) {
             Voter nowVoter = voters.get(i);
             List<Voter> nowVoterResult = em.createQuery("select u from Voter u where u.User_id = :id",Voter.class).setParameter("id",nowVoter.getUser_id()).getResultList();
+
+            System.out.println("haha voter id : " + Integer.toString(i));
+            for (int jj = 0; jj <nowVoterResult.size(); jj++) {
+                System.out.println(nowVoterResult.get(jj).getVote_id());
+
+            }
 
 
             // 매 X번 마다, 칭호를 업데이트한다.
@@ -158,8 +174,11 @@ public class VoteRepository {
                         kindCnt += 1;
                     }
 
-                    if (j == nowVoterResult.size()-1)
-                        lastKeyword = nowVoterVote.getFeeling();
+
+                    lastKeyword = nowVoterVote.getFeeling();
+                    System.out.println(lastKeyword);
+
+                    System.out.println(Integer.toString(nowVoterVote.getId()) + "forend");
                 }
 
                 // 변수들 값들 비교해서 칭호 최종 판별
