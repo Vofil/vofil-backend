@@ -1,5 +1,6 @@
 package com.vofil.vofilbackend.controller;
 
+import com.vofil.vofilbackend.domain.MypageUserInformation;
 import com.vofil.vofilbackend.domain.SimpleVoteInformation;
 import com.vofil.vofilbackend.service.MainpageService;
 import com.vofil.vofilbackend.service.MypageService;
@@ -27,4 +28,17 @@ public class MypageController {
     public List<SimpleVoteInformation> getUserVoters(String user_id){
         return mypageService.getUserVoters(user_id);
     }
+
+    // 유저정보 리턴
+    @GetMapping(value = "user/information", params = "user_id")
+    public MypageUserInformation getUserInformation(String user_id) {
+        return mypageService.getUserInformation(user_id);
+    }
+    
+    // 유저 칭호만 리턴
+    @GetMapping(value = "user/title", params = "user_id")
+    public String getUserTitle(String user_id) {
+        return mypageService.getUserTitle(user_id);
+    }
+
 }
