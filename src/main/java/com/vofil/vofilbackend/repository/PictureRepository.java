@@ -31,7 +31,6 @@ public class PictureRepository {
         }
         else if(cnt==2){
             em.createQuery("update Picture u set u.re2=:re2 where u.id=:id").setParameter("re2",file).setParameter("id",id).executeUpdate();
-
         }
         else if(cnt==3){
             em.createQuery("update Picture u set u.re3=:re3 where u.id=:id").setParameter("re3",file).setParameter("id",id).executeUpdate();
