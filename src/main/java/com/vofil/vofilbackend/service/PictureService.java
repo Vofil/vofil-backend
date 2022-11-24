@@ -8,8 +8,10 @@ import com.vofil.vofilbackend.repository.PictureRepository;
 import com.vofil.vofilbackend.repository.VoterRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.util.List;
 
 @Transactional
@@ -41,5 +43,13 @@ public class PictureService {
     public ResponseEntity showFile(int id, int cnt){
         return ResponseEntity.ok().body(pictureRepository.show(id,cnt));
     }
+    public ResponseEntity showing(int id, int cnt){
+        try{
+            File file=pictureRepository.showing(id,cnt);
+            return ResponseEntity.ok().body(file);
+        }catch(Exception e){
+            return ResponseEntity.ok().body(e);
+        }
 
+    }
 }

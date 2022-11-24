@@ -32,7 +32,7 @@ public class PictureController {
         return pictureService.createPicture(picture);
     }
     //@PutMapping(value = "", params = {"file","id", "cnt"})
-    @PostMapping("/clock")
+    @GetMapping("/clock")
     public ResponseEntity addFile(@RequestParam("file") MultipartFile file, @RequestParam int id, @RequestParam int cnt) throws IOException{
         System.out.println("확인");
 
@@ -42,7 +42,43 @@ public class PictureController {
         }
         return pictureService.update(id,file.getOriginalFilename(),cnt);
     }
+    @GetMapping("/checking1")
+    public ResponseEntity addFiles(@RequestBody MultipartFile file,@RequestBody Picture picture) throws IOException{
+        if(!file.isEmpty()){
+            String fullPath="/Users/82106/file/"+file.getOriginalFilename();
+            file.transferTo(new File(fullPath));
+        }
+        int id=picture.getId(); int cnt=0;
 
+        String one= picture.getRe1(); String two=picture.getRe2();
+        String three=picture.getRe3(); String four= picture.getRe4();
+        if(one!=null)
+            cnt=1;
+        else if(two!=null)
+            cnt=2;
+        else if(three!=null)
+            cnt=3;
+        else
+            cnt=4;
+
+        return pictureService.update(id,file.getOriginalFilename(),cnt);
+    }
+    @PostMapping("/checking")
+    public ResponseEntity addFiles(HttpServletRequest request, @RequestParam(value="file",required = false) MultipartFile file,
+                                   @RequestParam(value="id",required = false) int id,
+                                   @RequestParam(value="cnt",required = false)int cnt) throws IOException{
+
+        if(!file.isEmpty()){
+            String fullPath="/Users/82106/file/"+file.getOriginalFilename();
+            file.transferTo(new File(fullPath));
+        }
+
+        return pictureService.update(id,file.getOriginalFilename(),cnt);
+    }
+    @GetMapping("/showing")
+    public ResponseEntity showing(@RequestParam int id, @RequestParam int cnt){
+        return pictureService.showing(id,cnt);
+    }
     @PostMapping("/add")
     public ResponseEntity addFile(@RequestParam MultipartHttpServletRequest multipartRequest, @RequestParam int id, @RequestParam int cnt) throws IOException{
 

@@ -3,13 +3,22 @@ package com.vofil.vofilbackend.repository;
 import com.vofil.vofilbackend.domain.Picture;
 import com.vofil.vofilbackend.domain.User;
 import com.vofil.vofilbackend.domain.Vote;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.swing.plaf.basic.BasicDesktopIconUI;
 import javax.swing.plaf.multi.MultiInternalFrameUI;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 
 public class PictureRepository {
     private final EntityManager em;
@@ -31,7 +40,6 @@ public class PictureRepository {
         }
         else if(cnt==2){
             em.createQuery("update Picture u set u.re2=:re2 where u.id=:id").setParameter("re2",file).setParameter("id",id).executeUpdate();
-
         }
         else if(cnt==3){
             em.createQuery("update Picture u set u.re3=:re3 where u.id=:id").setParameter("re3",file).setParameter("id",id).executeUpdate();
@@ -62,6 +70,34 @@ public class PictureRepository {
             s= picture.getRe4();
         }
         return s;
+    }
+    public File showing(int id, int cnt)throws Exception{
+        //FileItem의 Path 설정을 위한 더미 파일 객체, UserProfileImg폴더는 존재하지만 dummy.jpg는 존재하지 않음
+        //File DummyFile = new File("/Users/2222.jpg");
+
+        String filePath="/Users/82106/file/";
+        String fileName=show(id,cnt);
+
+        //테스트용으로 사용하고 싶은 테스트 이미지
+        //해당 경로에 1.jpg 이미지 존재
+        File user1ProfileFile = new File(filePath+fileName);
+        return user1ProfileFile;
+//        //더미 파일로 FileItem 구현체를 생성
+//        FileItem user1ProfileFileItem = new DiskFileItem(
+//                "userProfile",
+//                Files.probeContentType(DummyFile.toPath()),
+//                false,
+//                DummyFile.getName(),
+//                (int) DummyFile.length(),
+//                DummyFile.getParentFile());
+//
+//        //FileItem 구현체에 1.jpg 이미지 파일 업로드
+//        user1ProfileFileItem.write(user1ProfileFile);
+//        user1ProfileFileItem.getOutputStream();
+//
+//        CommonsMultipartFile commonsMultipartFile = new CommonsMultipartFile(user1ProfileFileItem);
+//
+//        return commonsMultipartFile;
     }
     public Picture getPicture(int id){
         Picture user = em.find(Picture.class, id);
