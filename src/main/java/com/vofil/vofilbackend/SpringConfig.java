@@ -1,10 +1,13 @@
 package com.vofil.vofilbackend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.vofil.vofilbackend.repository.*;
 import com.vofil.vofilbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.persistence.EntityManager;
@@ -44,6 +47,13 @@ public class SpringConfig {
         commonsMultipartResolver.setDefaultEncoding("UTF-8");
         commonsMultipartResolver.setMaxUploadSize(50 * 1024 * 1024);
         return commonsMultipartResolver;
+    }
+    @Bean
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(mapper);
+        return converter;
     }
 //    @Bean
 //    public CommonsMultipartResolver multipartResolver() {
