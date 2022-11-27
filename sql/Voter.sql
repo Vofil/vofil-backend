@@ -8,5 +8,7 @@ create table Voter
     result3 int,
     result4 int,
 
-    primary key (id)
+    primary key (id),
+
+    FOREIGN KEY (id) REFERENCES Vote (id)
 );

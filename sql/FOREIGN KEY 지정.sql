@@ -1,0 +1,7 @@
+ALTER TABLE Voter
+ADD FOREIGN KEY (vote_id) REFERENCES Vote (id);
+
+ALTER TABLE Picture
+ADD FOREIGN KEY (id) REFERENCES Vote (id);
+
+
