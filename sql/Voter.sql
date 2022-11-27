@@ -10,5 +10,5 @@ create table Voter
 
     primary key (id),
 
-    FOREIGN KEY (id) REFERENCES Vote (id)
+    FOREIGN KEY (id) REFERENCES Vote (id) on update cascade on delete cascade
 );
