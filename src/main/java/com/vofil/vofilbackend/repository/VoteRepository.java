@@ -212,6 +212,21 @@ public class VoteRepository {
         }
     }
 
+    // 가장 최신의 ID 리턴
+    public int getMaxVoteId() {
+        int maxId = (int) em.createQuery("select max(v.id) from Vote v").getSingleResult();
+        return maxId;
+    }
+    // vote ID 값 변경하기
+    public int reraiseId(int voteId, int currentMax){
+        em.createQuery("update Vote v set v.id = :currentMax + 1 where v.id = :voteId")
+                .setParameter("currentMax",currentMax)
+                .setParameter("voteId",voteId)
+                .executeUpdate();
+        em.clear();
+        return currentMax+1;
+    }
+
     public int max(int a, int b) {
         if (a>b) return a;
         else return b;

@@ -62,6 +62,12 @@ public class VoteController {
         return ResponseEntity.ok().body(voteService.getVote(id));
     }
 
+    @PutMapping(value = "/reraise", params = "voteId")
+    public int reraise(@RequestParam int voteId) {
+        return voteService.reraise(voteId);
+    }
+
+
 //    @GetMapping("/photos")
 //    public String test(){
 //        return "vote-form";
