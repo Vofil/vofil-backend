@@ -32,4 +32,14 @@ public class UserRepository{
         return em.createQuery("select u from User u", User.class)
                 .getResultList();
     }
+
+    // 포인트 지급
+    public void givePoint(String userId, long point) {
+        em.createQuery("update User u set u.point=u.point + :point" +
+                        " where u.id=:userId")
+                .setParameter("point",point)
+                .setParameter("userId",userId)
+                .executeUpdate();
+        em.clear();
+    }
 }
