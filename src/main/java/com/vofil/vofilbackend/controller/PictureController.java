@@ -2,23 +2,30 @@ package com.vofil.vofilbackend.controller;
 
 import com.vofil.vofilbackend.domain.Picture;
 import com.vofil.vofilbackend.service.PictureService;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+import org.springframework.util.FileCopyUtils;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaType;
+import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.serial.SerialException;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 @RestController
@@ -63,6 +70,37 @@ public class PictureController {
 
         return pictureService.update(id,file.getOriginalFilename(),cnt);
     }
+    @GetMapping(value="/FullView", produces= MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody byte[] getImage(@RequestParam int id, @RequestParam int cnt)
+            throws IOException{
+        String value=pictureService.showFile(id, cnt);
+        FileInputStream fis = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        String fileDir = "C:\\Users\\82106\\file\\" + value; // 파일경로
+
+        try{
+            fis = new FileInputStream(fileDir);
+        } catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+
+        int readCount = 0;
+        byte[] buffer = new byte[1024];
+        byte[] fileArray = null;
+
+        try{
+            while((readCount = fis.read(buffer)) != -1){
+                baos.write(buffer, 0, readCount);
+            }
+            fileArray = baos.toByteArray();
+            fis.close();
+            baos.close();
+        } catch(IOException e){
+            throw new RuntimeException("File Error");
+        }
+        return fileArray;
+    }
     @PostMapping("/checking")
     public ResponseEntity addFiles(HttpServletRequest request, @RequestParam(value="file",required = false) MultipartFile file,
                                    @RequestParam(value="id",required = false) int id,
@@ -94,7 +132,7 @@ public class PictureController {
         return pictureService.update(id,file,cnt);
     }
     @GetMapping("/show")
-    public ResponseEntity showFile(@RequestParam int id, @RequestParam int cnt){
+    public String showFile(@RequestParam int id, @RequestParam int cnt){
         return pictureService.showFile(id, cnt);
     }
     @GetMapping("/confirm")

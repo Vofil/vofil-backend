@@ -40,8 +40,8 @@ public class PictureService {
         pictureRepository.update(id, file, cnt);
         return ResponseEntity.ok().body(id);
     }
-    public ResponseEntity showFile(int id, int cnt){
-        return ResponseEntity.ok().body(pictureRepository.show(id,cnt));
+    public String showFile(int id, int cnt){
+        return pictureRepository.show(id,cnt);
     }
     public ResponseEntity showing(int id, int cnt){
         try{
