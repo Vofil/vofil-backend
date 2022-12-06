@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,6 +96,29 @@ public class VoteRepository {
     // vote 하나가 끝나면, 그에 해당하는 voter들의 칭호를 업데이트한다.
     public void updateUserTitleAndKeyword(int voteId) {
 
+        // 칭호 3번째 영역 - 태그 별 칭호 목록
+        /****/
+        HashMap<String, String> TAG_TITLE_MAP = new HashMap<String, String>();
+        TAG_TITLE_MAP.put("예쁘다", "예쁜이");
+        TAG_TITLE_MAP.put( "귀엽다", "귀요미");
+        TAG_TITLE_MAP.put( "시크하다", "시크왕"); // ..
+        TAG_TITLE_MAP.put( "매력있다", "매력만점");
+        TAG_TITLE_MAP.put( "사랑스럽다", "러블리");
+        TAG_TITLE_MAP.put( "활발하다", "활발활발");
+        TAG_TITLE_MAP.put( "요즘유행", "트렌드 리더");
+        TAG_TITLE_MAP.put( "우아하다", "귀족");
+        TAG_TITLE_MAP.put( "강아지상", "댕댕이");
+        TAG_TITLE_MAP.put( "고양이상", "야옹이");
+        TAG_TITLE_MAP.put( "잘생겼다", "잘생");
+        TAG_TITLE_MAP.put( "멋있다", "어썸맨");
+        TAG_TITLE_MAP.put( "듬직하다", "불곰");
+        TAG_TITLE_MAP.put( "요즘스타일", "스타일리스트");
+        TAG_TITLE_MAP.put( "섹시하다", "섹시가이");
+        TAG_TITLE_MAP.put( "청량하다", "쿨가이");
+
+        TAG_TITLE_MAP.put( "기본", "심플리스트");
+        /****/
+
         List<Voter> voters = voterRepository.findResult(voteId);
         for (int tt = 0; tt<voters.size(); tt++)
             System.out.println(voters.get(tt));
@@ -123,6 +147,25 @@ public class VoteRepository {
                 int moodCnt = 0;
                 int kindCnt = 0;
 
+                // 태그 판별 변수
+                HashMap<String, Integer> tagCount = new HashMap<String, Integer>();
+                tagCount.put("예쁘다", 0);
+                tagCount.put( "귀엽다", 0);
+                tagCount.put( "시크하다", 0);
+                tagCount.put( "매력있다", 0);
+                tagCount.put( "사랑스럽다", 0);
+                tagCount.put( "활발하다", 0);
+                tagCount.put( "요즘유행", 0);
+                tagCount.put( "우아하다", 0);
+                tagCount.put( "강아지상", 0);
+                tagCount.put( "고양이상", 0);
+                tagCount.put( "잘생겼다", 0);
+                tagCount.put( "멋있다", 0);
+                tagCount.put( "듬직하다", 0);
+                tagCount.put( "요즘스타일", 0);
+                tagCount.put( "섹시하다", 0);
+                tagCount.put( "청량하다", 0);
+
                 String lastKeyword = "";
                 // 각각의 vote에 대해, 1.대중/독창 계산 , 2.상황/분위기/종류 계산
                 for (int j = 0 ; j<nowVoterResult.size() ; j++) {
@@ -131,36 +174,37 @@ public class VoteRepository {
                     // 아직 안 끝난 투표는 패스
                     if (nowVoterVote.getEnding_point() != 0) continue;
 
-                    // 1. 대중/독창 계산
-                    int[] resultArray = new int[4];
-                    resultArray[0] = nowVoterVote.getResult1();
-                    resultArray[1] = nowVoterVote.getResult2();
-                    resultArray[2] = nowVoterVote.getResult3();
-                    resultArray[3] = nowVoterVote.getResult4();
-                    int maxResult = -1;
-                    for (int k = 0; k<4; k++) {
-                        if (maxResult < resultArray[k]) maxResult = resultArray[k];
-                    }
-                    ArrayList<Integer> maxList = new ArrayList<>();
-                    for (int k = 0; k<4; k++) {
-                        if (maxResult == resultArray[k]) maxList.add(k+1);
-                    }
-                    // 내가 투표한 것의 숫자
-                    int myResult = -1;
-                    if (nowVoterResult.get(j).getResult1() == 1) myResult = 1;
-                    else if (nowVoterResult.get(j).getResult2() == 1) myResult = 2;
-                    else if (nowVoterResult.get(j).getResult3() == 1) myResult = 3;
-                    else myResult = 4;
-                    boolean notInFlag = true;
-                    for (int k = 0; k<maxList.size(); k++) {
-                        if (maxList.get(k) == myResult){
-                            notInFlag = false;
-                            isMatched += 1;
-                            break;
+                    // 1. 대중/독창 계산 - 일반투표일때만
+                    if (nowVoterVote.getKind() == 0) {
+                        int[] resultArray = new int[4];
+                        resultArray[0] = nowVoterVote.getResult1();
+                        resultArray[1] = nowVoterVote.getResult2();
+                        resultArray[2] = nowVoterVote.getResult3();
+                        resultArray[3] = nowVoterVote.getResult4();
+                        int maxResult = -1;
+                        for (int k = 0; k<4; k++) {
+                            if (maxResult < resultArray[k]) maxResult = resultArray[k];
                         }
+                        ArrayList<Integer> maxList = new ArrayList<>();
+                        for (int k = 0; k<4; k++) {
+                            if (maxResult == resultArray[k]) maxList.add(k+1);
+                        }
+                        // 내가 투표한 것의 숫자
+                        int myResult = -1;
+                        if (nowVoterResult.get(j).getResult1() == 1) myResult = 1;
+                        else if (nowVoterResult.get(j).getResult2() == 1) myResult = 2;
+                        else if (nowVoterResult.get(j).getResult3() == 1) myResult = 3;
+                        else myResult = 4;
+                        boolean notInFlag = true;
+                        for (int k = 0; k<maxList.size(); k++) {
+                            if (maxList.get(k) == myResult){
+                                notInFlag = false;
+                                isMatched += 1;
+                                break;
+                            }
+                        }
+                        if (notInFlag) isNotMatched += 1;
                     }
-                    if (notInFlag) isNotMatched += 1;
-
 
                     // 2. 상황/분위기/종류 계산
                     VoteFeeling titles = VoteFeeling.valueOf(nowVoterVote.getFeeling());
@@ -175,27 +219,45 @@ public class VoteRepository {
                     }
 
 
+                    // temp. 그 유저 키워드는 일단 마지막으로
                     lastKeyword = nowVoterVote.getFeeling();
-                    System.out.println(lastKeyword);
 
-                    System.out.println(Integer.toString(nowVoterVote.getId()) + "forend");
+
+                    // 3. 태그투표의 경우, 해당 태그 업데이트
+                    if (nowVoterVote.getKind() == 0) continue;
+                    String nowTag = nowVoterVote.getTaging();
+                    tagCount.put(nowTag, tagCount.get(nowTag)+1); // +1
+
                 }
 
                 // 변수들 값들 비교해서 칭호 최종 판별
                 String title = "기본 칭호";
-                int[] results = {isMatched, isNotMatched, situationCnt, moodCnt, kindCnt};
+
+                String title_1 = "";
+                String title_2 = "";
+                String title_3 = "";
+                // 1번
+                if (isMatched >= isNotMatched) title_1 = "대중적이고";
+                else title_1 = "독창적이고";
+
+                // 2번
+                if ((situationCnt >= moodCnt) && (situationCnt >= kindCnt)) title_2 = "상황을 잘 보는";
+                else if ((kindCnt >= situationCnt) && (kindCnt >= moodCnt) ) title_2 = "종류를 잘 보는";
+                else title_2 = "분위기를 잘 보는";
+
+                // 3번
                 int maxVal = -1;
-                for (int l = 0; l< results.length; l++) {
-                    if (maxVal < results[l]) maxVal = results[l];
+                String maxKey = "";
+                for (String key : tagCount.keySet()) { // keyset을 이용하기 때문에, 동점에 대해서는 랜덤 우승 처리
+                    if (tagCount.get(key) > maxVal) {
+                        maxVal = tagCount.get(key);
+                        maxKey = key;
+                    }
                 }
+                if (maxVal == 0) title_3 = TAG_TITLE_MAP.get("기본");
+                else title_3 = TAG_TITLE_MAP.get(maxKey);
 
-                if (situationCnt == maxVal) title= "상황을 잘 보는 눈";
-                else if (moodCnt == maxVal) title = "분위기를 잘 보는 눈";
-                else if (kindCnt == maxVal) title = "종류를 잘 보는 눈";
-                else if (isMatched == maxVal) title = "대중적인 눈";
-                else if (isNotMatched == maxVal) title = "독창적인 눈";
-
-                User v = (User) em.createQuery("select u from User u where u.id=:id").setParameter("id", nowVoter.getUser_id()).getSingleResult();
+                title = title_1 + ", "+ title_2 + ", "+ title_3;
 
                 // 그 유저의 칭호 UPDATE 쿼리
                 em.createQuery("update User u set u.title=:title where u.id=:id")
