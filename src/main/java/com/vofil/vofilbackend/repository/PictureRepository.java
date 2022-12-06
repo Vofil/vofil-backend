@@ -72,16 +72,17 @@ public class PictureRepository {
         return s;
     }
     public File showing(int id, int cnt)throws Exception{
+       String filePath="/Users/82106/file/";
+        String fileName=show(id,cnt);//해당 투표 id의 몇 번째 사진의 originalName을 찾는 함수
+
+        File ProfileFile = new File(filePath+fileName);
+
+        return ProfileFile;
+
         //FileItem의 Path 설정을 위한 더미 파일 객체, UserProfileImg폴더는 존재하지만 dummy.jpg는 존재하지 않음
         //File DummyFile = new File("/Users/2222.jpg");
 
-        String filePath="/Users/82106/file/";
-        String fileName=show(id,cnt);
 
-        //테스트용으로 사용하고 싶은 테스트 이미지
-        //해당 경로에 1.jpg 이미지 존재
-        File user1ProfileFile = new File(filePath+fileName);
-        return user1ProfileFile;
 //        //더미 파일로 FileItem 구현체를 생성
 //        FileItem user1ProfileFileItem = new DiskFileItem(
 //                "userProfile",
