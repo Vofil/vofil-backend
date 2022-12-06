@@ -1,19 +1,12 @@
 package com.vofil.vofilbackend.service;
 
-import com.vofil.vofilbackend.domain.Picture;
-import com.vofil.vofilbackend.domain.User;
 import com.vofil.vofilbackend.domain.Voter;
 import com.vofil.vofilbackend.repository.VoteRepository;
 import com.vofil.vofilbackend.repository.VoterRepository;
 import com.vofil.vofilbackend.vote.TagList;
 import com.vofil.vofilbackend.domain.Vote;
-import com.vofil.vofilbackend.vote.VoteCaregory;
 import com.vofil.vofilbackend.vote.VoteFeeling;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.method.annotation.ServletResponseMethodArgumentResolver;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -131,6 +124,14 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
     public void updateUserTitleAndKeyword(int voteId) {
         voteRepository.updateUserTitleAndKeyword(voteId);
     }
+
+    public int reraise(int voteId) {
+        int currentMax = voteRepository.getMaxVoteId();
+        int newId = voteRepository.reraiseId(voteId, currentMax);
+        return newId;
+    }
+
+
 }
 
 /*public Vote save(Vote vote) {//VoteCaregory check2=VoteCaregory.valueOf(category);
