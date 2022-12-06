@@ -52,6 +52,7 @@ public class VoteController {
         return voteService.showResult(id, cnt);
     }
 
+    // ttt : 칭호 갱신하는 api
     @PutMapping(value = "/ttt", params = "voteId")
     public void updateUserTitleAndKeyword(@RequestParam int voteId) {
         voteService.updateUserTitleAndKeyword(voteId);
@@ -62,6 +63,7 @@ public class VoteController {
         return ResponseEntity.ok().body(voteService.getVote(id));
     }
 
+    // reraise : 투표 다시 최상단으로 끌올하는 기능 (포인트 사용)
     @PutMapping(value = "/reraise", params = "voteId")
     public int reraise(@RequestParam int voteId) {
         return voteService.reraise(voteId);
