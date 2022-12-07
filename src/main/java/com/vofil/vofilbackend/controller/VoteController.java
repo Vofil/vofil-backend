@@ -82,7 +82,7 @@ public class VoteController {
 
     @Autowired
     UserService userService;
-    private final int RERAISE_COST = 5;
+    private final int RERAISE_COST = 50;
     @PutMapping(value = "/reraise", params = "userId")
     public int reraise(@RequestParam String userId) {
         if (userService.minusPointsIfHave(RERAISE_COST, userId)) {
@@ -90,7 +90,7 @@ public class VoteController {
             return voteService.reraise(randomVoteId); // 있으면 그 번호, 없으면 -1
         }
         else {
-            return -RERAISE_COST; // 포인트가 부족하면 -5
+            return -RERAISE_COST; // 포인트가 부족하면 -50
         }
 
     }
