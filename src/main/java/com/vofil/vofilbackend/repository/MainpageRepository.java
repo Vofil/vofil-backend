@@ -63,8 +63,8 @@ public class MainpageRepository {
         for (int i = 0 ; i < size ; i++) {
             SimpleVoteInformation svi = new SimpleVoteInformation();
             Vote vote = votes.get(i);
-            svi.setRe1(pictureRepository.show(vote.getId(), 1));
-            //->svi.setRe1(pictureRepository.showed(vote.getId(), 1)); 근데 SimpleVoteInformation의 Re1을 byte[]로 바꿔야함
+
+            svi.setRe1(pictureRepository.showed(vote.getId(), 1));
             svi.setTitle(vote.getFeeling());
             svi.setVote_id(vote.getId());
             sviList.add(svi);
