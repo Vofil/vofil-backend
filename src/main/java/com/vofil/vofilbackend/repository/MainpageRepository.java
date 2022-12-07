@@ -34,17 +34,6 @@ public class MainpageRepository {
         int userGender = user.getGender();
         int userAgeEnum = (int)((nowYear - userYear + 1) / 10);
 
-        System.out.println(em.createQuery("select v from Vote v " +
-                        "where ending_point > 0 and " +
-                        "v.user_id <> :user_id and " +
-                        "age in :ageList and " +
-                        "gender in :genderList",Vote.class)
-                .setParameter("user_id",user_id)
-                .setParameter("ageList",Arrays.asList(userAgeEnum, 100))
-                .setParameter("genderList", Arrays.asList(userGender, 5))
-                .getResultList().size() + 10000);
-        System.out.println(Arrays.asList(userAgeEnum, 100));
-
         return em.createQuery("select v from Vote v " +
                         "where ending_point > 0 and " +
                         "v.user_id <> :user_id and " +
