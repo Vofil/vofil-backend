@@ -64,10 +64,8 @@ public class VoteController {
         return ResponseEntity.ok().body(voteService.getVote(id));
     }
 
-    @GetMapping("/graph")
-    public List<Graph> getGraph(@RequestParam int id, @RequestParam int cnt){
-        return voteService.getGraph(id,cnt);
-    }
+
+
 
 //    @GetMapping("/photos")
 //    public String test(){
