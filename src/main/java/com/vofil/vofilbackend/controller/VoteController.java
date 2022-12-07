@@ -70,6 +70,10 @@ public class VoteController {
     public List<Graph> getGraph(@RequestParam int id, @RequestParam int cnt){
         return voteService.getGraph(id,cnt);
     }
+    @GetMapping("/graphAge")
+    public List<Graph> getAge(@RequestParam int id, @RequestParam int cnt){
+        return voteService.getAge(id,cnt);
+    }
 
 
     // reraise : 투표 다시 최상단으로 끌올하는 기능 (포인트 사용)
