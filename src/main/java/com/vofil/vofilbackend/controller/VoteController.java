@@ -2,6 +2,7 @@ package com.vofil.vofilbackend.controller;
 
 import com.vofil.vofilbackend.domain.Graph;
 import com.vofil.vofilbackend.domain.Vote;
+import com.vofil.vofilbackend.service.UserService;
 import com.vofil.vofilbackend.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -76,11 +77,26 @@ public class VoteController {
     }
 
 
-    // reraise : 투표 다시 최상단으로 끌올하는 기능 (포인트 사용)
-    @PutMapping(value = "/reraise", params = "voteId")
-    public int reraise(@RequestParam int voteId) {
-        return voteService.reraise(voteId);
+    // reraise : user_id로 안끝난 투표 랜덤하게 선택
+    //              service 아래단 -> 투표id로 다시 최상단으로 끌올하는 기능 (포인트 사용)
+
+    @Autowired
+    UserService userService;
+    private final int RERAISE_COST = 5;
+    @PutMapping(value = "/reraise", params = "userId")
+    public int reraise(@RequestParam String userId) {
+        if (userService.minusPointsIfHave(RERAISE_COST, userId)) {
+            int randomVoteId = voteService.getRandomOngoingVoteID(userId);
+            return voteService.reraise(randomVoteId); // 있으면 그 번호, 없으면 -1
+        }
+        else {
+            return -RERAISE_COST; // 포인트가 부족하면 -5
+        }
+
     }
+
+
+
 
 
 //    @GetMapping("/photos")
