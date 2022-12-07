@@ -1,12 +1,9 @@
 package com.vofil.vofilbackend.service;
 
-import com.vofil.vofilbackend.domain.Picture;
-import com.vofil.vofilbackend.domain.User;
-import com.vofil.vofilbackend.domain.Voter;
+import com.vofil.vofilbackend.domain.*;
 import com.vofil.vofilbackend.repository.VoteRepository;
 import com.vofil.vofilbackend.repository.VoterRepository;
 import com.vofil.vofilbackend.vote.TagList;
-import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.vote.VoteCaregory;
 import com.vofil.vofilbackend.vote.VoteFeeling;
 import org.springframework.http.HttpStatus;
@@ -27,7 +24,7 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
         this.voteRepository = voteRepository;
         this.voterRepository=voterRepository;
     }
-    public int[][] getGraph(int id, int cnt){
+    public List<Graph> getGraph(int id, int cnt){
         return voteRepository.getGraph(id,cnt);
     }
     public List<Vote> getAllVotes() {

@@ -1,5 +1,6 @@
 package com.vofil.vofilbackend.controller;
 
+import com.vofil.vofilbackend.domain.Graph;
 import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/votes")
@@ -63,8 +65,8 @@ public class VoteController {
     }
 
     @GetMapping("/graph")
-    public ResponseEntity getGraph(@RequestParam int id, @RequestParam int cnt){
-        return ResponseEntity.ok().body(voteService.getGraph(id,cnt));
+    public List<Graph> getGraph(@RequestParam int id, @RequestParam int cnt){
+        return voteService.getGraph(id,cnt);
     }
 
 //    @GetMapping("/photos")
