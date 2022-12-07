@@ -13,7 +13,7 @@ public class VoterController {
     @Autowired
     VoterService voterService;
     @GetMapping("/bool")
-    public ResponseEntity confirmBool(@RequestParam String id, int Vid){
+    public ResponseEntity confirmBool(@RequestParam String id, @RequestParam int Vid){
         return voterService.confirmBool(id, Vid);
     }
     @PostMapping("")

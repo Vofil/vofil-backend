@@ -1,5 +1,6 @@
 package com.vofil.vofilbackend.service;
 
+import com.vofil.vofilbackend.repository.UserRepository;
 import com.vofil.vofilbackend.repository.VoteRepository;
 import com.vofil.vofilbackend.repository.VoterRepository;
 import com.vofil.vofilbackend.domain.Vote;
@@ -16,9 +17,12 @@ public class VoterService {
     VoterRepository voterRepository;
     VoteRepository voteRepository;
 
-    public VoterService(VoterRepository voterRepository, VoteRepository voteRepository) {
+    UserRepository userRepository;
+
+    public VoterService(VoterRepository voterRepository, VoteRepository voteRepository, UserRepository userRepository) {
         this.voterRepository = voterRepository;
         this.voteRepository = voteRepository;
+        this.userRepository = userRepository;
     }
     public ResponseEntity confirmBool(String id,int Vid){//id 투표를 하는 사람 아이디, Vid 해당 투표 id
         //String id=voter.getUser_id();//투표를 하는 사람 아이디
@@ -30,7 +34,10 @@ public class VoterService {
         return ResponseEntity.ok().body(true);
     }
     public ResponseEntity createVoter(Voter voter){
-        String id=voter.getUser_id();//투표를 하는 사람 아이디
+        // 몇 포인트 줄지에 대한 변수
+        final int VOTER_POINT = 1;
+
+        String id = voter.getUser_id(); //투표를 하는 사람 아이디
         String createId=voteRepository.getVote(voter.getVote_id()).getUser_id();//투표를 만든 사람 아이디
         boolean checking=voterRepository.findByVoterId(voter.getUser_id(),voter.getVote_id());//투표를 이미했는 지 여부
         if(id.equals(createId)||checking==false){ //if로 있는 지 확인
@@ -40,6 +47,9 @@ public class VoterService {
         voterRepository.save(voter);
         extract(voter.getVote_id());
         voteRepository.check(voter.getVote_id());
+        // 포인트도 지급하기 !
+        userRepository.givePoint(voter.getUser_id(), (long) VOTER_POINT);
+
         return ResponseEntity.ok().body(voter.getId());
     }
     public ResponseEntity extract(int id){//투표 id가 인자

@@ -7,5 +7,7 @@ create table Picture
     re4 varchar(100),
 
 
-    primary key (id)
+    primary key (id),
+
+    FOREIGN KEY (id) REFERENCES Vote (id) on update cascade on delete cascade
 );

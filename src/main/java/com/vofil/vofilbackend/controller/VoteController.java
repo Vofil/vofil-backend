@@ -1,6 +1,5 @@
 package com.vofil.vofilbackend.controller;
 
-import com.vofil.vofilbackend.domain.Graph;
 import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/votes")
@@ -54,6 +52,7 @@ public class VoteController {
         return voteService.showResult(id, cnt);
     }
 
+    // ttt : 칭호 갱신하는 api
     @PutMapping(value = "/ttt", params = "voteId")
     public void updateUserTitleAndKeyword(@RequestParam int voteId) {
         voteService.updateUserTitleAndKeyword(voteId);
@@ -65,6 +64,17 @@ public class VoteController {
     }
 
 
+    @GetMapping("/graph")
+    public ResponseEntity getGraph(@RequestParam int id, @RequestParam int cnt){
+        return ResponseEntity.ok().body(voteService.getGraph(id,cnt));
+    }
+
+
+    // reraise : 투표 다시 최상단으로 끌올하는 기능 (포인트 사용)
+    @PutMapping(value = "/reraise", params = "voteId")
+    public int reraise(@RequestParam int voteId) {
+        return voteService.reraise(voteId);
+    }
 
 
 //    @GetMapping("/photos")
