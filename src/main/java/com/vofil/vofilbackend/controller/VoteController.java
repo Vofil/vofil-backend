@@ -62,6 +62,11 @@ public class VoteController {
         return ResponseEntity.ok().body(voteService.getVote(id));
     }
 
+    @GetMapping("/graph")
+    public ResponseEntity getGraph(@RequestParam int id, @RequestParam int cnt){
+        return ResponseEntity.ok().body(voteService.getGraph(id,cnt));
+    }
+
 //    @GetMapping("/photos")
 //    public String test(){
 //        return "vote-form";
