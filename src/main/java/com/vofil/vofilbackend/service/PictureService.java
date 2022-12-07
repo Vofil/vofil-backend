@@ -43,6 +43,9 @@ public class PictureService {
     public String showFile(int id, int cnt){
         return pictureRepository.show(id,cnt);
     }
+    public byte[] showedFile(int id, int cnt){
+        return pictureRepository.showed(id,cnt);
+    }
     public ResponseEntity showing(int id, int cnt){
         try{
             File file=pictureRepository.showing(id,cnt);

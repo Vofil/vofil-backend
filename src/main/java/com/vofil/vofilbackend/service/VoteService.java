@@ -24,6 +24,9 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
     public List<Graph> getGraph(int id, int cnt){
         return voteRepository.getGraph(id,cnt);
     }
+    public List<Graph> getAge(int id, int cnt){
+        return voteRepository.getAge(id,cnt);
+    }
     public List<Vote> getAllVotes() {
         return voteRepository.getAllVotes();
     }

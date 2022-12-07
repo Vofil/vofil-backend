@@ -35,7 +35,7 @@ public class PictureController {
     PictureService pictureService;
 
     // 로컬의 사진 경로는 PictureController, PictureRepository 값만 바꾸면 됩니다! 하드코딩 말고 PICTURE_PATH 변수 이용하기!!
-    public final String PICTURE_PATH = "/Users/syt06162/Desktop/capstone/";
+    public final String PICTURE_PATH = "/Users/82106/file/";//C:\Users\82106\file
 
 
     @PostMapping("")
@@ -73,6 +73,12 @@ public class PictureController {
             cnt=4;
 
         return pictureService.update(id,file.getOriginalFilename(),cnt);
+    }
+    @GetMapping(value="/FullViews", produces= MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody byte[] getShowed(@RequestParam int id, @RequestParam int cnt){
+        byte[] hi=pictureService.showedFile(id,cnt);
+
+        return hi;
     }
     @GetMapping(value="/FullView", produces= MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody byte[] getImage(@RequestParam int id, @RequestParam int cnt)
