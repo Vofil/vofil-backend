@@ -6,7 +6,7 @@ import com.vofil.vofilbackend.vote.VoteFeeling;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
 
 
 public class VoteRepository {
@@ -426,6 +423,15 @@ public class VoteRepository {
                 .executeUpdate();
         em.clear();
         return currentMax+1;
+    }
+
+    // 그 유저가 만든 미완료 투표들 리턴
+    public List<Vote> getOngoingVotes(String user_id) {
+        return em.createQuery("select v from Vote v " +
+                        "where ending_point > 0 and " +
+                        "v.user_id = :user_id" ,Vote.class)
+                .setParameter("user_id",user_id)
+                .getResultList();
     }
 
     public int max(int a, int b) {

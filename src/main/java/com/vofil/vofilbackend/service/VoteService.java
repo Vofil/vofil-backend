@@ -10,8 +10,7 @@ import com.vofil.vofilbackend.vote.VoteFeeling;
 import org.springframework.http.ResponseEntity;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Transactional
 public class VoteService {//vote repository에는 vote 정보만 따로 repository 만들어서 거기는 id 등만
@@ -132,10 +131,21 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
         voteRepository.updateUserTitleAndKeyword(voteId);
     }
 
+    // 투표id -> 끌올하기
     public int reraise(int voteId) {
         int currentMax = voteRepository.getMaxVoteId();
         int newId = voteRepository.reraiseId(voteId, currentMax);
         return newId;
+    }
+
+    // 그 유저의 미완료 vote 중 랜덤 select 리턴, 없다면 -1
+    public int getRandomOngoingVoteID(String user_id) {
+        List<Vote> votes = voteRepository.getOngoingVotes(user_id);
+        if (votes.size() == 0) return -1;
+        else {
+            Collections.shuffle(votes);
+            return votes.get(0).getId();
+        }
     }
 
 

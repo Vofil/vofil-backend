@@ -61,4 +61,14 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.getAllUsers();
     }
+
+    // user_id로 유저 찾고, 그 유저가 N포인트 이상 있다면 N포인트 깎기
+    public boolean minusPointsIfHave(int point, String user_id){
+        User user = userRepository.findById(user_id).get();
+        if (user.getPoint() >= point) {
+            user.setPoint( user.getPoint() - point);
+            return true; // 잘 깎았다
+        }
+        else return false; // 없어서 못깎았다.
+    }
 }
