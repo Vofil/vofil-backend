@@ -81,9 +81,7 @@ public class VoteRepository {
         int[][] picture = new int[4][2];
         diagram[0][0] = 3;
         diagram[1][0] = 4;
-//        List<Voter> voters;
-//        voters= em.createQuery("select u from Voter u where u.vote_id = :id and re1= :cnt",Voter.class).
-//                setParameter("id",id).setParameter("cnt",cnt).getResultList();
+
         List<Voter> voters = voterRepository.findResult(id);
         for (int i = 0; i < voters.size(); i++) {
             Voter voter = voters.get(i);

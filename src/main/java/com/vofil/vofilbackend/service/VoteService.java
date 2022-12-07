@@ -1,5 +1,6 @@
 package com.vofil.vofilbackend.service;
 
+import com.vofil.vofilbackend.domain.Graph;
 import com.vofil.vofilbackend.domain.Voter;
 import com.vofil.vofilbackend.repository.VoteRepository;
 import com.vofil.vofilbackend.repository.VoterRepository;
@@ -20,7 +21,7 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
         this.voteRepository = voteRepository;
         this.voterRepository=voterRepository;
     }
-    public int[][] getGraph(int id, int cnt){
+    public List<Graph> getGraph(int id, int cnt){
         return voteRepository.getGraph(id,cnt);
     }
     public List<Vote> getAllVotes() {
