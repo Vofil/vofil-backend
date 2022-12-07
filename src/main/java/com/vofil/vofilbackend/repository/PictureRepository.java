@@ -10,8 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.persistence.EntityManager;
 import javax.swing.plaf.basic.BasicDesktopIconUI;
 import javax.swing.plaf.multi.MultiInternalFrameUI;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +23,7 @@ public class PictureRepository {
     private final EntityManager em;
 
     // 로컬의 사진 경로는 PictureController, PictureRepository 값만 바꾸면 됩니다! 하드코딩 말고 PICTURE_PATH 변수 이용하기!!
-    public final String PICTURE_PATH = "/Users/syt06162/Desktop/capstone/";
+    public final String PICTURE_PATH = "/Users/82106/file/";
 
     public PictureRepository(EntityManager em) {
         this.em = em;
@@ -73,7 +72,50 @@ public class PictureRepository {
         else if(cnt==4){
             s= picture.getRe4();
         }
+
         return s;
+    }
+    public byte[] showed(int id, int cnt){
+        Picture picture=em.find(Picture.class, id);
+        String s="0"; String checked="0";
+        if(cnt==1){
+            s=picture.getRe1();
+        }
+        else if(cnt==2){
+            s=picture.getRe2();
+        }
+        else if(cnt==3){
+            s= picture.getRe3();
+        }
+        else if(cnt==4){
+            s= picture.getRe4();
+        }
+        FileInputStream fis = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        String fileDir = PICTURE_PATH + s; // 파일경로
+
+        try{
+            fis = new FileInputStream(fileDir);
+        } catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+
+        int readCount = 0;
+        byte[] buffer = new byte[1024];
+        byte[] fileArray = null;
+
+        try{
+            while((readCount = fis.read(buffer)) != -1){
+                baos.write(buffer, 0, readCount);
+            }
+            fileArray = baos.toByteArray();
+            fis.close();
+            baos.close();
+        } catch(IOException e){
+            throw new RuntimeException("File Error");
+        }
+        return fileArray;
     }
     public File showing(int id, int cnt)throws Exception{
        String filePath=PICTURE_PATH;

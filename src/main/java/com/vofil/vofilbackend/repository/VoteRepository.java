@@ -4,6 +4,8 @@ import com.vofil.vofilbackend.domain.*;
 import com.vofil.vofilbackend.vote.VoteFeeling;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +121,8 @@ public class VoteRepository {
             }
         }
         diagram[0][1] = (int) (((double) picture[cnt - 1][0] / (picture[cnt - 1][0] + picture[cnt - 1][1])) * 100);
-        diagram[1][1] = (int) (((double) picture[cnt - 1][1] / (picture[cnt - 1][0] + picture[cnt - 1][1])) * 100);
+        diagram[1][1]=100-diagram[0][1];
+        //diagram[1][1] = (int) (((double) picture[cnt - 1][1] / (picture[cnt - 1][0] + picture[cnt - 1][1])) * 100);
 
         for (int i = 0; i < diagram.length - 1; i++) {
             for (int j = 0; j < diagram.length - 1; j++) {
@@ -139,6 +142,83 @@ public class VoteRepository {
                 graph1.setName("남자");
             else
                 graph1.setName("여자");
+            graph1.setPercentage(diagram[i][1]);
+
+            graph.add(graph1);
+        }
+
+        return graph;
+    }
+    public int getAging(int year){
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        int nowYear = Integer.parseInt(now.format(formatter));
+        int userYear = year;
+        int ageEnum = (int)((nowYear - userYear + 1) / 10);//[1,2,3,4,5]
+
+        return ageEnum;
+    }
+    public List<Graph> getAge(int id, int cnt) {//나이 분석
+        int[][] diagram = new int[5][2];
+        int[][] picture = new int[4][5];
+
+
+        List<Voter> voters = voterRepository.findResult(id);
+        for (int i = 0; i < voters.size(); i++) {
+            Voter voter = voters.get(i);
+            if (voter.getResult1() != 0) {
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                int age=getAging(user.getBirth_year());
+                picture[0][age-1]++;
+            }
+            if (voter.getResult2() != 0) {
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                int age=getAging(user.getBirth_year());
+                picture[1][age-1]++;
+            }
+            if (voter.getResult3() != 0) {
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                int age=getAging(user.getBirth_year());
+                picture[2][age-1]++;
+            }
+            if (voter.getResult4() != 0) {
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                int age=getAging(user.getBirth_year());
+                picture[3][age-1]++;
+            }
+        }
+
+        int finalTotal=0;
+        for(int i=0;i<diagram.length;i++){
+            diagram[i][0]=i+1;
+            finalTotal+=picture[cnt-1][i];
+        }
+        for(int i=0;i<diagram.length;i++){
+            diagram[i][1]=(int)(((double)picture[cnt-1][i]/finalTotal)*100);
+        }
+        for (int i = 0; i < diagram.length - 1; i++) {
+            for (int j = 0; j < diagram.length - 1; j++) {
+                if (diagram[j][1] < diagram[j + 1][1]) {
+                    int[] temp = diagram[j];
+                    diagram[j] = diagram[j + 1];
+                    diagram[j + 1] = temp;
+                }
+            }
+        }
+
+        List<Graph> graph = new ArrayList<>();
+
+        for (int i = 0 ; i < diagram.length ; i++) {
+            Graph graph1 = new Graph();
+            int a=diagram[i][0]*10;
+            String b=Integer.toString(a);
+            String c=b+"대";
+
+            graph1.setName(c);
             graph1.setPercentage(diagram[i][1]);
 
             graph.add(graph1);
