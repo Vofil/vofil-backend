@@ -1,9 +1,6 @@
 package com.vofil.vofilbackend.repository;
 
-import com.vofil.vofilbackend.domain.Picture;
-import com.vofil.vofilbackend.domain.User;
-import com.vofil.vofilbackend.domain.Vote;
-import com.vofil.vofilbackend.domain.Voter;
+import com.vofil.vofilbackend.domain.*;
 import com.vofil.vofilbackend.vote.VoteFeeling;
 
 import javax.persistence.EntityManager;
@@ -79,63 +76,75 @@ public class VoteRepository {
                 .getResultList();
     }
 
-    public int[][] getGraph(int id,int cnt){//성별 분석
-        int[][] diagram=new int[2][2];
-        int[][] picture=new int[4][2];
-        diagram[0][0]=3;diagram[1][0]=4;
-//        List<Voter> voters;
-//        voters= em.createQuery("select u from Voter u where u.vote_id = :id and re1= :cnt",Voter.class).
-//                setParameter("id",id).setParameter("cnt",cnt).getResultList();
+    public List<Graph> getGraph(int id, int cnt) {//성별 분석
+        int[][] diagram = new int[2][2];
+        int[][] picture = new int[4][2];
+        diagram[0][0] = 3;
+        diagram[1][0] = 4;
+
         List<Voter> voters = voterRepository.findResult(id);
-        for(int i=0;i<voters.size();i++){
+        for (int i = 0; i < voters.size(); i++) {
             Voter voter = voters.get(i);
-            if(voter.getResult1() != 0){
-                Optional<User> user1=userRepository.findById(voter.getUser_id());
-                User user=user1.get();
-                if (user.getGender()==3)
+            if (voter.getResult1() != 0) {
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                if (user.getGender() == 3)
                     picture[0][0]++;
                 else
                     picture[0][1]++;
             }
-            if(voter.getResult2() != 0){
-                Optional<User> user1=userRepository.findById(voter.getUser_id());
-                User user=user1.get();
-                if (user.getGender()==3)
+            if (voter.getResult2() != 0) {
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                if (user.getGender() == 3)
                     picture[1][0]++;
                 else
                     picture[1][1]++;
             }
-            if(voter.getResult3() != 0){
-                Optional<User> user1=userRepository.findById(voter.getUser_id());
-                User user=user1.get();
-                if (user.getGender()==3)
+            if (voter.getResult3() != 0) {
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                if (user.getGender() == 3)
                     picture[2][0]++;
                 else
                     picture[2][1]++;
             }
-            if(voter.getResult4() != 0){
-                Optional<User> user1=userRepository.findById(voter.getUser_id());
-                User user=user1.get();
-                if (user.getGender()==3)
+            if (voter.getResult4() != 0) {
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                if (user.getGender() == 3)
                     picture[3][0]++;
                 else
                     picture[3][1]++;
             }
         }
-        diagram[0][1]=(int)(((double)picture[cnt-1][0]/(picture[cnt-1][0]+picture[cnt-1][1]))*100);
-        diagram[1][1]=(int)(((double)picture[cnt-1][1]/(picture[cnt-1][0]+picture[cnt-1][1]))*100);
+        diagram[0][1] = (int) (((double) picture[cnt - 1][0] / (picture[cnt - 1][0] + picture[cnt - 1][1])) * 100);
+        diagram[1][1] = (int) (((double) picture[cnt - 1][1] / (picture[cnt - 1][0] + picture[cnt - 1][1])) * 100);
 
-        for(int i=0;i<diagram.length-1;i++){
-            for(int j=0;j<diagram.length-1;j++){
-                if(diagram[j][1]>diagram[j+1][1]){
-                    int[] temp=diagram[j];
-                    diagram[j]=diagram[j+1];
-                    diagram[j+1]=temp;
+        for (int i = 0; i < diagram.length - 1; i++) {
+            for (int j = 0; j < diagram.length - 1; j++) {
+                if (diagram[j][1] < diagram[j + 1][1]) {
+                    int[] temp = diagram[j];
+                    diagram[j] = diagram[j + 1];
+                    diagram[j + 1] = temp;
                 }
             }
         }
 
-        return diagram;
+        List<Graph> graph = new ArrayList<>();
+
+        for (int i = 0 ; i < diagram.length ; i++) {
+            Graph graph1 = new Graph();
+            if(diagram[i][0]==3)
+                graph1.setName("남자");
+            else
+                graph1.setName("여자");
+            graph1.setPercentage(diagram[i][1]);
+
+            graph.add(graph1);
+        }
+
+        return graph;
     }
 
     @Autowired
