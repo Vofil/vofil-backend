@@ -34,6 +34,10 @@ public class PictureController {
     @Autowired
     PictureService pictureService;
 
+    // 로컬의 사진 경로는 PictureController, PictureRepository 값만 바꾸면 됩니다! 하드코딩 말고 PICTURE_PATH 변수 이용하기!!
+    public final String PICTURE_PATH = "/Users/syt06162/Desktop/capstone/";
+
+
     @PostMapping("")
     public ResponseEntity createPicture(@RequestBody Picture picture){//id만 채우고 나머지는 null로 일단 받아서 객체 만들기
         return pictureService.createPicture(picture);
@@ -44,7 +48,7 @@ public class PictureController {
         System.out.println("확인");
 
         if(!file.isEmpty()){
-            String fullPath="/Users/82106/file/"+file.getOriginalFilename();
+            String fullPath=PICTURE_PATH+file.getOriginalFilename();
             file.transferTo(new File(fullPath));
         }
         return pictureService.update(id,file.getOriginalFilename(),cnt);
@@ -52,7 +56,7 @@ public class PictureController {
     @GetMapping("/checking1")
     public ResponseEntity addFiles(@RequestBody MultipartFile file,@RequestBody Picture picture) throws IOException{
         if(!file.isEmpty()){
-            String fullPath="/Users/82106/file/"+file.getOriginalFilename();
+            String fullPath= PICTURE_PATH +file.getOriginalFilename();
             file.transferTo(new File(fullPath));
         }
         int id=picture.getId(); int cnt=0;
@@ -77,7 +81,7 @@ public class PictureController {
         FileInputStream fis = null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        String fileDir = "C:\\Users\\82106\\file\\" + value; // 파일경로
+        String fileDir = PICTURE_PATH + value; // 파일경로
 
         try{
             fis = new FileInputStream(fileDir);
@@ -107,7 +111,7 @@ public class PictureController {
                                    @RequestParam(value="cnt",required = false)int cnt) throws IOException{
 
         if(!file.isEmpty()){
-            String fullPath="/Users/82106/file/"+file.getOriginalFilename();
+            String fullPath=PICTURE_PATH+file.getOriginalFilename();
             file.transferTo(new File(fullPath));
         }
 

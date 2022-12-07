@@ -68,7 +68,7 @@ public class SpringConfig {
     }
     @Bean
     public VoterService voterService(){
-        return new VoterService(voterRepository(),voteRepository());
+        return new VoterService(voterRepository(),voteRepository(), userRepository());
     }
 
     @Bean

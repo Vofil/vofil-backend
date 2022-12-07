@@ -22,6 +22,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class PictureRepository {
     private final EntityManager em;
+
+    // 로컬의 사진 경로는 PictureController, PictureRepository 값만 바꾸면 됩니다! 하드코딩 말고 PICTURE_PATH 변수 이용하기!!
+    public final String PICTURE_PATH = "/Users/syt06162/Desktop/capstone/";
+
     public PictureRepository(EntityManager em) {
         this.em = em;
     }
@@ -72,7 +76,7 @@ public class PictureRepository {
         return s;
     }
     public File showing(int id, int cnt)throws Exception{
-       String filePath="/Users/82106/file/";
+       String filePath=PICTURE_PATH;
         String fileName=show(id,cnt);//해당 투표 id의 몇 번째 사진의 originalName을 찾는 함수
 
         File ProfileFile = new File(filePath+fileName);
