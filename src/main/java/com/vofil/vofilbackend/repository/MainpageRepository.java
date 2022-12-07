@@ -32,15 +32,15 @@ public class MainpageRepository {
         int nowYear = Integer.parseInt(now.format(formatter));
         int userYear = user.getBirth_year();
         int userGender = user.getGender();
-        int ageEnum = (int)((nowYear - userYear + 1) / 10);
+        int userAgeEnum = (int)((nowYear - userYear + 1) / 10);
 
         return em.createQuery("select v from Vote v " +
-                "where ending_point > 0 and " +
-                "v.user_id <> :user_id and " +
-                "age=:ageEnum and " +
+                        "where ending_point > 0 and " +
+                        "v.user_id <> :user_id and " +
+                        "age in :ageList and " +
                         "gender in :genderList",Vote.class)
                 .setParameter("user_id",user_id)
-                .setParameter("ageEnum",ageEnum)
+                .setParameter("ageList",Arrays.asList(userAgeEnum, 100))
                 .setParameter("genderList", Arrays.asList(userGender, 5))
                 .getResultList();
     }
@@ -63,8 +63,8 @@ public class MainpageRepository {
         for (int i = 0 ; i < size ; i++) {
             SimpleVoteInformation svi = new SimpleVoteInformation();
             Vote vote = votes.get(i);
-            svi.setRe1(pictureRepository.show(vote.getId(), 1));
-            //->svi.setRe1(pictureRepository.showed(vote.getId(), 1)); 근데 SimpleVoteInformation의 Re1을 byte[]로 바꿔야함
+
+            svi.setRe1(pictureRepository.showed(vote.getId(), 1));
             svi.setTitle(vote.getFeeling());
             svi.setVote_id(vote.getId());
             sviList.add(svi);
