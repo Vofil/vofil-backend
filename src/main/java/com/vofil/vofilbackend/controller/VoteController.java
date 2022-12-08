@@ -83,7 +83,7 @@ public class VoteController {
     @Autowired
     UserService userService;
     private final int RERAISE_COST = 50;
-    @PutMapping(value = "/reraise", params = "userId")
+    @GetMapping(value = "/reraise", params = "userId")
     public int reraise(@RequestParam String userId) {
         if (userService.minusPointsIfHave(RERAISE_COST, userId)) {
             int randomVoteId = voteService.getRandomOngoingVoteID(userId);
