@@ -235,22 +235,22 @@ public class VoteRepository {
         // 칭호 3번째 영역 - 태그 별 칭호 목록
         /****/
         HashMap<String, String> TAG_TITLE_MAP = new HashMap<String, String>();
-        TAG_TITLE_MAP.put("예쁘다", "예쁜이");
-        TAG_TITLE_MAP.put( "귀엽다", "귀요미");
-        TAG_TITLE_MAP.put( "시크하다", "시크왕"); // ..
-        TAG_TITLE_MAP.put( "매력있다", "매력만점");
-        TAG_TITLE_MAP.put( "사랑스럽다", "러블리");
-        TAG_TITLE_MAP.put( "활발하다", "활발활발");
+        TAG_TITLE_MAP.put("예쁘다", "날카로운 첫인상 분석가");
+        TAG_TITLE_MAP.put( "귀엽다", "날카로운 첫인상 분석가");
+        TAG_TITLE_MAP.put( "시크하다", "숨겨진 매력 수색 탐정");
+        TAG_TITLE_MAP.put( "매력있다", "숨겨진 매력 수색 탐정");
+        TAG_TITLE_MAP.put( "사랑스럽다", "날카로운 첫인상 분석가");
+        TAG_TITLE_MAP.put( "활발하다", "날카로운 첫인상 분석가");
         TAG_TITLE_MAP.put( "요즘유행", "트렌드 리더");
-        TAG_TITLE_MAP.put( "우아하다", "귀족");
-        TAG_TITLE_MAP.put( "강아지상", "댕댕이");
-        TAG_TITLE_MAP.put( "고양이상", "야옹이");
-        TAG_TITLE_MAP.put( "잘생겼다", "잘생");
-        TAG_TITLE_MAP.put( "멋있다", "어썸맨");
-        TAG_TITLE_MAP.put( "듬직하다", "불곰");
-        TAG_TITLE_MAP.put( "요즘스타일", "스타일리스트");
+        TAG_TITLE_MAP.put( "우아하다", "숨겨진 매력 수색 탐정");
+        TAG_TITLE_MAP.put( "강아지상", "동물상 찾기 달인");
+        TAG_TITLE_MAP.put( "고양이상", "동물상 찾기 달인");
+        TAG_TITLE_MAP.put( "잘생겼다", "날카로운 첫인상 분석가");
+        TAG_TITLE_MAP.put( "멋있다", "날카로운 첫인상 분석가");
+        TAG_TITLE_MAP.put( "듬직하다", "숨겨진 매력 수색 탐정");
+        TAG_TITLE_MAP.put( "요즘스타일", "트랜드 리더");
         TAG_TITLE_MAP.put( "섹시하다", "섹시가이");
-        TAG_TITLE_MAP.put( "청량하다", "쿨가이");
+        TAG_TITLE_MAP.put( "청량하다", "숨겨진 매력 수색 탐정");
 
         TAG_TITLE_MAP.put( "기본", "심플리스트");
         /****/
