@@ -66,7 +66,10 @@ public class VoteController {
         return ResponseEntity.ok().body(voteService.getVote(id));
     }
 
-
+    @GetMapping("/tagGraph")
+    public List<Graph> getTagGraph(@RequestParam int id, @RequestParam int cnt){
+        return voteService.getTagGraph(id,cnt);
+    }
     @GetMapping("/graph")
     public List<Graph> getGraph(@RequestParam int id, @RequestParam int cnt){
         return voteService.getGraph(id,cnt);
@@ -74,6 +77,11 @@ public class VoteController {
     @GetMapping("/graphAge")
     public List<Graph> getAge(@RequestParam int id, @RequestParam int cnt){
         return voteService.getAge(id,cnt);
+    }
+
+    @GetMapping("/graphNick")
+    public List<Graph> getNick(@RequestParam int id, @RequestParam int cnt,@RequestParam int kind){
+        return voteService.getNickName(id,cnt,kind);
     }
 
 

@@ -159,7 +159,6 @@ public class VoteRepository {
         int[][] diagram = new int[5][2];
         int[][] picture = new int[4][5];
 
-
         List<Voter> voters = voterRepository.findResult(id);
         for (int i = 0; i < voters.size(); i++) {
             Voter voter = voters.get(i);
@@ -218,6 +217,228 @@ public class VoteRepository {
             graph1.setName(c);
             graph1.setPercentage(diagram[i][1]);
 
+            graph.add(graph1);
+        }
+
+        return graph;
+    }
+    public List<Graph> getNickName(int id, int cnt,int kind) {//칭호 분석(어떤 종류의 칭호인지가 kind)
+        int[][] diagram = new int[5][2];
+
+        HashMap<String, Integer> analyze = new HashMap<String, Integer>();
+        analyze.put("독창적이고",0);
+        analyze.put("대중적이고",1);
+        analyze.put(" 상황을 잘 보는",5); //나머지 0
+        analyze.put(" 비율을 잘 보는",6); // 1
+        analyze.put(" 분위기를 잘 보는",7);//2
+        analyze.put(" 날카로운 첫인상 분석가",10);//나머지 0
+        analyze.put(" 동물상 찾기 달인",11); //1
+        analyze.put(" 숨겨진 매력 수색 탐정",12); //2
+        analyze.put(" 트랜드 리더",13);//3
+
+        HashMap< Integer,String> analyzing = new HashMap<Integer,String>();
+        analyzing.put(0,"독창적인 눈");
+        analyzing.put(1,"대중적인 눈");
+        analyzing.put(5," 상황을 잘 보는 눈");
+        analyzing.put(6," 비율을 잘 보는 눈");
+        analyzing.put(7," 분위기를 잘 보는 눈");
+        analyzing.put(10," 날카로운 첫인상 분석가");
+        analyzing.put(11," 동물상 찾기 달인");
+        analyzing.put(12," 숨겨진 매력 수색 탐정");
+        analyzing.put(13," 트랜드 리더");
+
+
+        HashMap<String, Integer> first = new HashMap<String, Integer>();
+        first.put("독창적이고",0);
+        first.put("대중적이고",0);
+
+
+        HashMap<String, Integer> second = new HashMap<String, Integer>();
+        second.put(" 상황을 잘 보는",0);
+        second.put(" 비율을 잘 보는",0);
+        second.put(" 분위기를 잘 보는",0);
+
+        HashMap<String, Integer> third = new HashMap<String, Integer>();
+        third.put(" 날카로운 첫인상 분석가",0);
+        third.put(" 동물상 찾기 달인",0);
+        third.put(" 숨겨진 매력 수색 탐정",0);
+        third.put(" 트랜드 리더",0);
+
+        HashMap<String,Integer>[] full=new HashMap[3];
+        full[0]=first;
+        full[1]=second;
+        full[2]=third;
+
+
+        List<Voter> voters = voterRepository.findResult(id);
+        for (int i = 0; i < voters.size(); i++) {
+            Voter voter = voters.get(i);
+            int[] result=new int[4];
+            result[0]=voter.getResult1();
+            result[1]=voter.getResult2();
+            result[2]=voter.getResult3();
+            result[3]=voter.getResult4();
+
+
+            if( result[cnt-1] !=0 ){
+                Optional<User> user1 = userRepository.findById(voter.getUser_id());
+                User user = user1.get();
+                if(user.getTitle()==null)
+                    continue;
+                String[] nick=user.getTitle().split(",");
+                String names=nick[kind-1];
+                full[kind-1].put(names, full[kind-1].get(names)+1);
+            }
+        }
+
+        int cntKey=0;
+        Set<String> keys = full[kind-1].keySet();
+        for (String key : keys) {
+            diagram[cntKey][0]=analyze.get(key);
+            cntKey++;
+        }
+
+        int cntValue=0;
+        Collection<Integer> values = full[kind-1].values();
+        for (Integer value : values) {
+            diagram[cntValue][1]=value;
+            cntValue++;
+        }
+
+        int finalTotal=0;
+        for(int i=0;i<cntKey;i++){
+            finalTotal+=diagram[i][1];
+        }
+        for(int i=0;i<cntKey;i++){
+            diagram[i][1]=(int)(((double)diagram[i][1]/finalTotal)*100);
+        }
+
+        for (int i = 0; i < cntKey-1; i++) {
+            for (int j = 0; j < cntKey-1; j++) {
+                if (diagram[j][1] < diagram[j + 1][1]) {
+                    int[] temp = diagram[j];
+                    diagram[j] = diagram[j + 1];
+                    diagram[j + 1] = temp;
+                }
+            }
+        }
+        List<Graph> graph = new ArrayList<>();
+        for (int i = 0 ; i < cntKey ; i++) {
+            Graph graph1 = new Graph();
+            graph1.setName(analyzing.get(diagram[i][0]));
+            graph1.setPercentage(diagram[i][1]);
+            graph.add(graph1);
+        }
+
+        return graph;
+    }
+    public List<Graph> getTagGraph(int id, int cnt) {//칭호 분석(어떤 종류의 칭호인지가 kind)
+        int[][] diagram=new int[16][2];
+        HashMap< Integer,String> analyzing = new HashMap<Integer,String>();
+        analyzing.put(1,"예쁘다");
+        analyzing.put(2,"귀엽다");
+        analyzing.put(3,"시크하다");
+        analyzing.put(4,"매력있다");
+        analyzing.put(5,"사랑스럽다");
+        analyzing.put(6,"활발하다");
+        analyzing.put(7,"요즘유행");
+        analyzing.put(8,"우아하다");
+        analyzing.put(9,"강아지상");
+        analyzing.put(10,"고양이상");
+        analyzing.put(20,"잘생겼다");
+        analyzing.put(21,"멋있다");
+        analyzing.put(24,"듬직하다");
+        analyzing.put(26,"요즘스타일");
+        analyzing.put(27,"섹시하다");
+        analyzing.put(28,"청량하다");
+
+        HashMap<String,Integer> analyze = new HashMap<String,Integer>();
+        analyze.put("예쁘다",1);
+        analyze.put("귀엽다",2);
+        analyze.put("시크하다",3);
+        analyze.put("매력있다",4);
+        analyze.put("사랑스럽다",5);
+        analyze.put("활발하다",6);
+        analyze.put("요즘유행",7);
+        analyze.put("우아하다",8);
+        analyze.put("강아지상",9);
+        analyze.put("고양이상",10);
+        analyze.put("잘생겼다",20);
+        analyze.put("멋있다",21);
+        analyze.put("듬직하다",24);
+        analyze.put("요즘스타일",26);
+        analyze.put("섹시하다",27);
+        analyze.put("청량하다",28);
+
+
+        HashMap<String,Integer> full=new HashMap<String,Integer>();
+        full.put("예쁘다",0);
+        full.put("귀엽다",0);
+        full.put("시크하다",0);
+        full.put("매력있다",0);
+        full.put("사랑스럽다",0);
+        full.put("활발하다",0);
+        full.put("요즘유행",0);
+        full.put("우아하다",0);
+        full.put("강아지상",0);
+        full.put("고양이상",0);
+        full.put("잘생겼다",0);
+        full.put("멋있다",0);
+        full.put("듬직하다",0);
+        full.put("요즘스타일",0);
+        full.put("섹시하다",0);
+        full.put("청량하다",0);
+
+        List<Voter> voters = voterRepository.findResult(id);
+        for (int i = 0; i < voters.size(); i++) {
+            Voter voter = voters.get(i);
+            int[] result=new int[4];
+            result[0]=voter.getResult1();
+            result[1]=voter.getResult2();
+            result[2]=voter.getResult3();
+            result[3]=voter.getResult4();
+
+            if( result[cnt-1] !=0 ){
+                full.put(analyzing.get(result[cnt-1]),full.get(analyzing.get(result[cnt-1]))+1);
+            }
+        }
+
+        int cntKey=0;
+        Set<String> keys = full.keySet();
+        for (String key : keys) {
+            diagram[cntKey][0]=analyze.get(key);
+            cntKey++;
+        }
+
+        int cntValue=0;
+        Collection<Integer> values = full.values();
+        for (Integer value : values) {
+            diagram[cntValue][1]=value;
+            cntValue++;
+        }
+
+        int finalTotal=0;
+        for(int i=0;i<cntKey;i++){
+            finalTotal+=diagram[i][1];
+        }
+        for(int i=0;i<cntKey;i++){
+            diagram[i][1]=(int)(((double)diagram[i][1]/finalTotal)*100);
+        }
+
+        for (int i = 0; i < cntKey-1; i++) {
+            for (int j = 0; j < cntKey-1; j++) {
+                if (diagram[j][1] < diagram[j + 1][1]) {
+                    int[] temp = diagram[j];
+                    diagram[j] = diagram[j + 1];
+                    diagram[j + 1] = temp;
+                }
+            }
+        }
+        List<Graph> graph = new ArrayList<>();
+        for (int i = 0 ; i < cntKey ; i++) {
+            Graph graph1 = new Graph();
+            graph1.setName(analyzing.get(diagram[i][0]));
+            graph1.setPercentage(diagram[i][1]);
             graph.add(graph1);
         }
 
