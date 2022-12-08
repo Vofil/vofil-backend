@@ -86,7 +86,7 @@ public class VoteController {
     @GetMapping(value = "/reraise", params = "userId")
     public int reraise(@RequestParam String userId) {
         if (userService.minusPointsIfHave(RERAISE_COST, userId)) {
-            int randomVoteId = voteService.getRandomOngoingVoteID(userId);
+            int randomVoteId = voteService.getLastOngoingVoteID(userId);
             return voteService.reraise(randomVoteId); // 있으면 그 번호, 없으면 -1
         }
         else {
