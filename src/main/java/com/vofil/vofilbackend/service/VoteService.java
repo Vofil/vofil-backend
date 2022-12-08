@@ -153,12 +153,11 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
         return newId;
     }
 
-    // 그 유저의 미완료 vote 중 랜덤 select 리턴, 없다면 -1
-    public int getRandomOngoingVoteID(String user_id) {
+    // 그 유저의 미완료 vote 중 가장 옛날 select 리턴, 없다면 -1
+    public int getLastOngoingVoteID(String user_id) {
         List<Vote> votes = voteRepository.getOngoingVotes(user_id);
         if (votes.size() == 0) return -1;
         else {
-            Collections.shuffle(votes);
             return votes.get(0).getId();
         }
     }
