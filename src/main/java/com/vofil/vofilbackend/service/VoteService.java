@@ -2,11 +2,13 @@ package com.vofil.vofilbackend.service;
 
 import com.vofil.vofilbackend.domain.Graph;
 import com.vofil.vofilbackend.domain.Voter;
+import com.vofil.vofilbackend.repository.UserRepository;
 import com.vofil.vofilbackend.repository.VoteRepository;
 import com.vofil.vofilbackend.repository.VoterRepository;
 import com.vofil.vofilbackend.vote.TagList;
 import com.vofil.vofilbackend.domain.Vote;
 import com.vofil.vofilbackend.vote.VoteFeeling;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import javax.transaction.Transactional;
@@ -16,6 +18,9 @@ import java.util.*;
 public class VoteService {//vote repository에는 vote 정보만 따로 repository 만들어서 거기는 id 등만
     VoteRepository voteRepository;
     VoterRepository voterRepository;
+
+    @Autowired
+    UserRepository userRepository;
     public VoteService(VoteRepository voteRepository,VoterRepository voterRepository) {
         this.voteRepository = voteRepository;
         this.voterRepository=voterRepository;
@@ -33,6 +38,10 @@ public class VoteService {//vote repository에는 vote 정보만 따로 reposito
 //         vote.setCategorying(VoteCaregory.valueOf(vote.getCategorying()));
 //         vote.setFeeling(VoteFeeling.valueOf(vote.getFeeling()));
 //         vote.setTagList(TagList.valueOf(vote.getTaging()));
+
+        final int VOTE_POINT = 10;
+        // 포인트도 지급하기 !
+        userRepository.givePoint(vote.getUser_id(), (long) VOTE_POINT);
 
         voteRepository.save(vote);
         return ResponseEntity.ok().body(vote.getId());//투표 id
