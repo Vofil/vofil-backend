@@ -228,7 +228,7 @@ public class VoteRepository {
         analyze.put("독창적이고",0);
         analyze.put("대중적이고",1);
         analyze.put(" 상황을 잘 보는",5); //나머지 0
-        analyze.put(" 비율을 잘 보는",6); // 1
+        analyze.put(" 종류를 잘 보는",6); // 1
         analyze.put(" 분위기를 잘 보는",7);//2
         analyze.put(" 날카로운 첫인상 분석가",10);//나머지 0
         analyze.put(" 동물상 찾기 달인",11); //1
@@ -240,7 +240,7 @@ public class VoteRepository {
         analyzing.put(0,"독창적인 눈");
         analyzing.put(1,"대중적인 눈");
         analyzing.put(5," 상황을 잘 보는 눈");
-        analyzing.put(6," 비율을 잘 보는 눈");
+        analyzing.put(6," 종류를 잘 보는 눈");
         analyzing.put(7," 분위기를 잘 보는 눈");
         analyzing.put(10," 날카로운 첫인상 분석가");
         analyzing.put(11," 동물상 찾기 달인");
@@ -256,7 +256,7 @@ public class VoteRepository {
 
         HashMap<String, Integer> second = new HashMap<String, Integer>();
         second.put(" 상황을 잘 보는",0);
-        second.put(" 비율을 잘 보는",0);
+        second.put(" 종류를 잘 보는",0);
         second.put(" 분위기를 잘 보는",0);
 
         HashMap<String, Integer> third = new HashMap<String, Integer>();
