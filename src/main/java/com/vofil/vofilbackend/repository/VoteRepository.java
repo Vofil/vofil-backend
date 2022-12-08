@@ -234,6 +234,7 @@ public class VoteRepository {
         analyze.put(" 동물상 찾기 달인",11); //1
         analyze.put(" 숨겨진 매력 수색 탐정",12); //2
         analyze.put(" 트랜드 리더",13);//3
+        analyze.put(" 심플리스트",14);//3
 
         HashMap< Integer,String> analyzing = new HashMap<Integer,String>();
         analyzing.put(0,"독창적인 눈");
@@ -245,6 +246,7 @@ public class VoteRepository {
         analyzing.put(11," 동물상 찾기 달인");
         analyzing.put(12," 숨겨진 매력 수색 탐정");
         analyzing.put(13," 트랜드 리더");
+        analyzing.put(14," 심플리스트");
 
 
         HashMap<String, Integer> first = new HashMap<String, Integer>();
@@ -262,6 +264,7 @@ public class VoteRepository {
         third.put(" 동물상 찾기 달인",0);
         third.put(" 숨겨진 매력 수색 탐정",0);
         third.put(" 트랜드 리더",0);
+        third.put(" 심플리스트",0);
 
         HashMap<String,Integer>[] full=new HashMap[3];
         full[0]=first;
