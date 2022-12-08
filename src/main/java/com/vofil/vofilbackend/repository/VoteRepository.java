@@ -241,7 +241,7 @@ public class VoteRepository {
         TAG_TITLE_MAP.put( "매력있다", "숨겨진 매력 수색 탐정");
         TAG_TITLE_MAP.put( "사랑스럽다", "날카로운 첫인상 분석가");
         TAG_TITLE_MAP.put( "활발하다", "날카로운 첫인상 분석가");
-        TAG_TITLE_MAP.put( "요즘유행", "트렌드 리더");
+        TAG_TITLE_MAP.put( "요즘유행", "트랜드 리더");
         TAG_TITLE_MAP.put( "우아하다", "숨겨진 매력 수색 탐정");
         TAG_TITLE_MAP.put( "강아지상", "동물상 찾기 달인");
         TAG_TITLE_MAP.put( "고양이상", "동물상 찾기 달인");
