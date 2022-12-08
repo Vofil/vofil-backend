@@ -118,8 +118,7 @@ public class VoteRepository {
             }
         }
         diagram[0][1] = (int) (((double) picture[cnt - 1][0] / (picture[cnt - 1][0] + picture[cnt - 1][1])) * 100);
-        diagram[1][1]=100-diagram[0][1];
-        //diagram[1][1] = (int) (((double) picture[cnt - 1][1] / (picture[cnt - 1][0] + picture[cnt - 1][1])) * 100);
+        diagram[1][1] = (int) (((double) picture[cnt - 1][1] / (picture[cnt - 1][0] + picture[cnt - 1][1])) * 100);
 
         for (int i = 0; i < diagram.length - 1; i++) {
             for (int j = 0; j < diagram.length - 1; j++) {
