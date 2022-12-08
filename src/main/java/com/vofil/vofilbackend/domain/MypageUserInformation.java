@@ -7,6 +7,8 @@ public class MypageUserInformation {
     private int gender; //성별 3,4
     private String title; // 칭호
 
+    private int point; // 포인트
+
 
     // gs
     public String getName() {
@@ -48,4 +50,13 @@ public class MypageUserInformation {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
 }

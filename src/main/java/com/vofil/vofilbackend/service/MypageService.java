@@ -49,6 +49,7 @@ public class MypageService {
         ui.setName(user.getName());
         ui.setTitle(user.getTitle());
         ui.setGender(user.getGender());
+        ui.setPoint(user.getPoint().intValue());
 
         String birth = String.valueOf(user.getBirth_year()) +  "-" + String.valueOf(String.format("%02d", user.getBirth_month())) + "-"
                 + String.valueOf(String.format("%02d", user.getBirth_day()));
