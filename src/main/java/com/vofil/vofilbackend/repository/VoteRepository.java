@@ -472,7 +472,7 @@ public class VoteRepository {
         TAG_TITLE_MAP.put( "멋있다", "날카로운 첫인상 분석가");
         TAG_TITLE_MAP.put( "듬직하다", "숨겨진 매력 수색 탐정");
         TAG_TITLE_MAP.put( "요즘스타일", "트랜드 리더");
-        TAG_TITLE_MAP.put( "섹시하다", "섹시가이");
+        TAG_TITLE_MAP.put( "섹시하다", "숨겨진 매력 수색 탐정");
         TAG_TITLE_MAP.put( "청량하다", "숨겨진 매력 수색 탐정");
 
         TAG_TITLE_MAP.put( "기본", "심플리스트");
