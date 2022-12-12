@@ -1,11 +1,11 @@
 # [ vofil-backend ]
 
-![logo]<img width="298" alt="logo" src="https://user-images.githubusercontent.com/92567571/207050410-4e3cfd25-8884-4e0a-afc6-8fa3a1407afc.png">
+<img width="298" alt="logo" src="https://user-images.githubusercontent.com/92567571/207050410-4e3cfd25-8884-4e0a-afc6-8fa3a1407afc.png">
 
 
 ## 실행 방법
 ### 1. 설치 항목
-+ Java 11버전
++ Java 11 버전
 + H2 database 1.4.200 버전
 + intelliJ 최신 버전
 
