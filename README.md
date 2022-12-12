@@ -18,7 +18,7 @@
     ```
 3. [H2 database](https://www.h2database.com/html/download-archive.html) 이곳에서 1.4.200 버전을 다운로드 하십시오.
 4. H2 database를 실행시키고, db명 **"test"** 데이터베이스를 생성하십시오.  
-+ db 이름을 바꾸고 싶은 경우, **vofil-backend\src\main\resources\application.propertie** 에서 **spring.datasource.url=jdbc:h2:tcp://localhost/~/[DB명]** 을 변경해야 합니다.
++ db 이름을 바꾸고 싶은 경우, **vofil-backend\src\main\resources\application.properties** 에서 **spring.datasource.url=jdbc:h2:tcp://localhost/~/[DB명]** 을 변경해야 합니다.
 5. **vofil-backend\sql** 경로에 있는 **Picture.sql, user.sql, Vote.sql, Voter.sql** 파일의 코드들을 각각 복사한 후 H2 database에서 실행해 table을 생성하십시오.
 6. [IntelliJ IDEA](https://www.jetbrains.com/idea/) 이곳에서 최신 버전 인텔리제이를 다운로드 하십시오.
 
