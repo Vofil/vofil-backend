@@ -24,7 +24,7 @@
 
 ### 3. 실행
 1. H2 database를 실행시키십시오.
-2. IntelliJ에서 VofilBackendApplication을 실행시키십시오.
+2. IntelliJ를 반드시 관리자 권한으로 실행한 후, VofilBackendApplication을 실행시키십시오.
 3. 서버는 실행이 되었습니다. api 관련 테스트를 해 보고 싶은 경우 **localhost:8089/api** 에 요청을 보내면 됩니다.
 4. 프론트엔드의 코드를 클론 및 실행시키십시오. 이에 대한 안내는 [vofil-frontend](https://github.com/Vofil/vofil-frontend#readme) 에서 확인이 가능합니다.
 
